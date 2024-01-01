@@ -101,11 +101,12 @@ const Gameapp = () => {
                         document.getElementById('game').style.display = 'grid'
                         document.body.style.backgroundColor = 'rgb(19, 56, 190, 0.8)'
                         document.querySelector('.name h1').innerText = "Blue Time";
-                        document.querySelector('.name h1').style.color = "rgb(19, 56, 190)";
+                        document.querySelector('.name h1').style.color = "#0096FF";
                         clear()
-                        window.clearInterval(timeout)
+
                     }, 3000);
-                });
+                    window.clearInterval(timeout)
+                }, 0);
                 o += 1;
                 setOpoint(o);
             } else if (winnub == 1) {
@@ -118,10 +119,11 @@ const Gameapp = () => {
                         document.getElementById('game').style.display = 'grid'
                         document.body.style.backgroundColor = 'rgb(19, 56, 190, 0.8)'
                         document.querySelector('.name h1').innerText = "Blue Time";
-                        document.querySelector('.name h1').style.color = "rgb(19, 56, 190)";
+                        document.querySelector('.name h1').style.color = "#0096FF";
                         clear()
-                        window.clearInterval(timeout)
+
                     }, 3000);
+                    window.clearInterval(timeout)
                 });
 
                 x += 1;
@@ -135,10 +137,11 @@ const Gameapp = () => {
                         document.getElementById('game').style.display = 'grid'
                         document.body.style.backgroundColor = 'rgb(19, 56, 190, 0.8)'
                         document.querySelector('h1').innerText = "Blue Time";
-                        document.querySelector('h1').style.color = "rgb(19, 56, 190)";
+                        document.querySelector('h1').style.color = "#0096FF";
                         clear()
-                        window.clearInterval(timeout)
+
                     }, 3000);
+                    window.clearInterval(timeout)
                 });
 
             }
