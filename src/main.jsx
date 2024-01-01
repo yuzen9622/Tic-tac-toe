@@ -5,11 +5,13 @@ import End from './end';
 
 var o = 0;
 var x = 0;
+var gameover = 0;
 const Gameapp = () => {
     var c = 0;
     var t = 0;
     var winnub = 3;
-    const [who, setwho] = useState('');
+
+
     const [player, setplayer] = useState('')
     const [Opoint, setOpoint] = useState(0);
     const [Xpoint, setXpoint] = useState(0);
@@ -66,33 +68,23 @@ const Gameapp = () => {
     function getactive(where) {
 
         var boxs = document.querySelectorAll('#box');
-
         if (boxs[where].value == '') {
             if (c % 2 == 0) {
                 boxs[where].value = 'o';
-
                 document.body.style.backgroundColor = "rgb(227, 36, 43,0.8)";
                 document.querySelector('.name h1').style.color = "#E97451"
-
                 document.querySelector('.name h1').innerText = "Red Time"
-
             } else {
-
-
                 boxs[where].value = 'x';
-
                 document.body.style.backgroundColor = "rgb(19, 56, 190, 0.8)";
                 document.querySelector('.name h1').style.color = "#0096FF"
-
                 document.querySelector('.name h1').innerText = "Blue Time"
-
             }
 
             winnub = win();
-            console.log(winnub)
-            console.log(t)
+
             if (winnub == 0) {
-                setwho("獲勝");
+
                 var timeout = window.setInterval(() => {
 
                     end("O獲勝");
@@ -103,14 +95,14 @@ const Gameapp = () => {
                         document.querySelector('.name h1').innerText = "Blue Time";
                         document.querySelector('.name h1').style.color = "#0096FF";
                         clear()
-
                     }, 3000);
+
                     window.clearInterval(timeout)
                 }, 0);
                 o += 1;
                 setOpoint(o);
             } else if (winnub == 1) {
-                setwho("獲勝");
+
                 var timeout = window.setInterval(() => {
 
                     end("X獲勝");
@@ -123,6 +115,8 @@ const Gameapp = () => {
                         clear()
 
                     }, 3000);
+
+
                     window.clearInterval(timeout)
                 });
 
@@ -133,19 +127,18 @@ const Gameapp = () => {
 
                     end("平手")
                     setTimeout(() => {
-
                         document.getElementById('game').style.display = 'grid'
                         document.body.style.backgroundColor = 'rgb(19, 56, 190, 0.8)'
                         document.querySelector('h1').innerText = "Blue Time";
                         document.querySelector('h1').style.color = "#0096FF";
-                        clear()
+                        clear();
 
                     }, 3000);
                     window.clearInterval(timeout)
                 });
 
             }
-
+            console.log(Opoint, Xpoint)
             c++;
         }
 
@@ -158,14 +151,37 @@ const Gameapp = () => {
 
 
     function end(statue) {
-        document.getElementById('game').style.display = 'none'
-        document.body.style.backgroundColor = '#42fc67'
-        document.querySelector('.name h1').innerText = statue;
-        document.querySelector('.name h1').style.color = "#fff";
+
         t = 0;
         c = 0;
         winnub = 3;
 
+        statue !== "平手" ? gameover++ : gameover = gameover
+        console.log(gameover)
+
+        if (gameover == 3) {
+            if (o > x) {
+                document.getElementById('game').style.display = 'none'
+                document.body.style.backgroundColor = '#0096FF'
+                document.querySelector('.name h1').innerText = "Blue Win";
+                document.querySelector('.name h1').style.color = "#fff";
+
+            } else {
+                document.getElementById('game').style.display = 'none'
+                document.body.style.backgroundColor = '#E97451'
+                document.querySelector('.name h1').innerText = "Red Win";
+                document.querySelector('.name h1').style.color = "#fff";
+
+            }
+
+
+        } else {
+
+            document.getElementById('game').style.display = 'none'
+            document.body.style.backgroundColor = '#42fc67'
+            document.querySelector('.name h1').innerText = statue;
+            document.querySelector('.name h1').style.color = "#fff";
+        }
 
     }
 
@@ -175,8 +191,15 @@ const Gameapp = () => {
         for (var i = 0; i < 9; i++) {
             boxs[i].value = '';
         }
-
+        if (gameover == 3) {
+            setOpoint(0);
+            setXpoint(0);
+            o = 0;
+            x = 0;
+            gameover = 0;
+        }
     }
+
     return (
         <>
             <div className="point">
