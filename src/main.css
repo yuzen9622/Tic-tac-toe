@@ -1,0 +1,145 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(19, 56, 190, 0.8);
+}
+
+.game {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    transition: all 0.5s;
+
+}
+
+.game input {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    font-size: 50px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.game input:nth-child(1) {
+    border: none;
+    border-bottom: 5px solid #fff;
+    border-right: 5px solid #fff;
+}
+
+.game input:nth-child(2) {
+    border: none;
+    border-bottom: 5px solid #fff;
+}
+
+.game input:nth-child(3) {
+    border: none;
+    border-bottom: 5px solid #fff;
+    border-left: 5px solid #fff;
+}
+
+.game input:nth-child(4) {
+    border: none;
+    border-right: 5px solid #fff;
+
+}
+
+.game input:nth-child(5) {
+    border: none;
+
+}
+
+.game input:nth-child(6) {
+    border: none;
+    border-left: 5px solid #fff;
+}
+
+.game input:nth-child(7) {
+    border: none;
+    border-right: 5px solid #fff;
+    border-top: 5px solid #fff;
+
+}
+
+.game input:nth-child(8) {
+    border: none;
+
+    border-top: 5px solid #fff;
+
+}
+
+.game input:nth-child(9) {
+    border: none;
+    border-left: 5px solid #fff;
+    border-top: 5px solid #fff;
+
+}
+
+.start input {
+    margin-top: 20px;
+    border: none;
+    width: 80px;
+    height: 30px;
+    font-size: 25px;
+    background-color: transparent;
+    border: 2px solid #333;
+    border-radius: 15px;
+
+}
+
+.start input:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+h1 {
+    font-size: 60px;
+    color: #0096FF;
+}
+
+h2 {
+    color: #fff;
+    font-size: 30px;
+}
+
+.name {
+    text-align: center;
+}
+
+.point {
+    display: flex;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.point input {
+    width: 50px;
+    border: none;
+    outline: none;
+    text-align: center;
+    background-color: transparent;
+    font-size: 25px;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.point label {
+    font-size: 25px;
+
+}
+
+.ox {
+    margin-left: 20px;
+}
