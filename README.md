@@ -1,70 +1,24 @@
-# Getting Started with Create React App
+# Tic Tac Toe By React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 歡迎來到我們的React圈圈叉叉遊戲！這是一個經典的兩人對戰遊戲，您可以和朋友或家人一起玩。以下是有關如何使用和開發這個遊戲的資訊。
 
-## Available Scripts
+## 使用語言
 
-In the project directory, you can run:
+### React: 這個遊戲是使用React框架構建的，這使得開發過程中的組件化更加簡單。
 
-### `npm start`
+### JavaScript & CSS: 使用標準的前端語言進行開發，使得遊戲在各種瀏覽器中都能正確運行。
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 遊戲規則
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 這是一個簡單的圈圈叉叉遊戲，兩位玩家輪流在3x3的棋盤上放置"O"或"X"，目標是先在一條水平、垂直或對角線上連成三個相同的符號。
 
-### `npm test`
+### 採五戰三勝
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 未來發展計劃 
 
-### `npm run build`
+### 希望可以加入 AI對戰以及多人連機
+### 給遊戲帶來更多樣玩法
+## 問題回饋
+### 如果有任何問題、建議或意見，可以通過 oscar48079@gmail.com 與我聯繫。
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 感謝您觀賞我的作品，祝您遊戲愉快！謝謝!
