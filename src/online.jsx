@@ -100,8 +100,10 @@ export default function Online() {
   socket?.on("finishState", (data) => {
     setFinish(data.winner);
     setCheckBoard(renderFrom);
-    setplayer(null);
-    setRecipientPlayer(null);
+    setTimeout(() => {
+      setplayer(null);
+      setRecipientPlayer(null);
+    }, 3000);
   });
 
   useEffect(() => {
@@ -111,8 +113,10 @@ export default function Online() {
       setFinish(winner);
       socket.emit("finish", { winner });
       setCheckBoard(renderFrom);
-      setplayer(null);
-      setRecipientPlayer(null);
+      setTimeout(() => {
+        setplayer(null);
+        setRecipientPlayer(null);
+      }, 3000);
     }
   }, [checkBoard]);
 
@@ -120,7 +124,7 @@ export default function Online() {
     let name = window.prompt("輸入名子");
     if (name) {
       setplayer(name);
-      const newSocket = io("http://localhost:8080", {
+      const newSocket = io("https://tic-tac-toe-socket-server.onrender.com", {
         autoConnect: true,
       });
       newSocket?.emit("join", { playerName: name });
