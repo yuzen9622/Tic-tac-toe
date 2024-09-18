@@ -17,8 +17,14 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     transition: all 0.5s;
 
-}
 
+}
+.single{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .game input {
     width: 60px;
     height: 60px;
@@ -122,6 +128,7 @@ h2 {
     display: flex;
     color: #fff;
     margin-bottom: 20px;
+
 }
 
 .point input {
@@ -143,3 +150,23 @@ h2 {
 .ox {
     margin-left: 20px;
 }
+.player{
+  
+    background-color: #0096FF;
+    padding: 5px;
+    border-radius: 0px 50px;
+    margin: 0 10px;
+    min-width: 150px;
+    text-overflow: ellipsis;
+    white-space:inherit;
+
+ }
+ .player label{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0;
+ }
+ .currentState{
+    background-color:rgb(227, 36, 43,0.8) ;
+ }

@@ -1,0 +1,37 @@
+.start{
+    width: 100vw;
+    height: 100vh;
+
+    
+}
+.start .title,.start .mode{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.mode{
+    height: 50%;
+    flex-direction: column;
+}
+.mode a,.mode button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(19, 56, 190, 0.8);
+text-decoration: none;
+background:#0096FF ;
+width: 250px;
+border: 3px solid transparent;
+padding: 10px 0;
+margin: 10px;
+font-weight: bold;
+font-size: 20px;
+transition: all .5s;
+}
+
+.mode a:hover,.mode button:hover{
+    color:#fff;
+    border: 3px solid #fff;
+    border-radius: 15px;
+}
