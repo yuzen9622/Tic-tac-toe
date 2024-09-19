@@ -73,7 +73,7 @@ export default function Online() {
       }
     });
     let isDraw = checkBoard.every((value) => value !== "");
-    if (isDraw) {
+    if (isDraw && !winner.winner) {
       winner.winner = "draw";
     }
 
