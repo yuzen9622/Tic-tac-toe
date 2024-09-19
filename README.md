@@ -30,7 +30,7 @@
 ### │   └── package.json   
 ### └── README.md 
 
-### [tic-tac-toe-socket-server](https://example.com)
+### [tic-tac-toe-socket-server](https://github.com/yuzen9622/tic-tac-toe-socket-server)
 ### ├── server/                
 ### │   ├── index.js           
 ### │   └── package.json       
