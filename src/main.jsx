@@ -16,102 +16,102 @@ const Gameapp = () => {
     t++;
     var boxs = document.querySelectorAll("#box");
     if (
-      boxs[0].value === "o" &&
-      boxs[1].value === "o" &&
-      boxs[2].value === "o"
+      boxs[0].innerText === "o" &&
+      boxs[1].innerText === "o" &&
+      boxs[2].innerText === "o"
     ) {
       console.log("o win");
       return 0;
     } else if (
-      boxs[0].value === "o" &&
-      boxs[4].value === "o" &&
-      boxs[8].value === "o"
+      boxs[0].innerText === "o" &&
+      boxs[4].innerText === "o" &&
+      boxs[8].innerText === "o"
     ) {
       return 0;
     } else if (
-      boxs[2].value === "o" &&
-      boxs[4].value === "o" &&
-      boxs[6].value === "o"
+      boxs[2].innerText === "o" &&
+      boxs[4].innerText === "o" &&
+      boxs[6].innerText === "o"
     ) {
       return 0;
     } else if (
-      boxs[3].value === "o" &&
-      boxs[4].value === "o" &&
-      boxs[5].value === "o"
+      boxs[3].innerText === "o" &&
+      boxs[4].innerText === "o" &&
+      boxs[5].innerText === "o"
     ) {
       return 0;
     } else if (
-      boxs[6].value === "o" &&
-      boxs[7].value === "o" &&
-      boxs[8].value === "o"
+      boxs[6].innerText === "o" &&
+      boxs[7].innerText === "o" &&
+      boxs[8].innerText === "o"
     ) {
       return 0;
     } else if (
-      boxs[2].value === "o" &&
-      boxs[5].value === "o" &&
-      boxs[8].value === "o"
+      boxs[2].innerText === "o" &&
+      boxs[5].innerText === "o" &&
+      boxs[8].innerText === "o"
     ) {
       return 0;
     } else if (
-      boxs[0].value === "o" &&
-      boxs[3].value === "o" &&
-      boxs[6].value === "o"
+      boxs[0].innerText === "o" &&
+      boxs[3].innerText === "o" &&
+      boxs[6].innerText === "o"
     ) {
       return 0;
     } else if (
-      boxs[1].value === "o" &&
-      boxs[4].value === "o" &&
-      boxs[7].value === "o"
+      boxs[1].innerText === "o" &&
+      boxs[4].innerText === "o" &&
+      boxs[7].innerText === "o"
     ) {
       return 0;
     }
 
     if (
-      boxs[0].value === "x" &&
-      boxs[1].value === "x" &&
-      boxs[2].value === "x"
+      boxs[0].innerText === "x" &&
+      boxs[1].innerText === "x" &&
+      boxs[2].innerText === "x"
     ) {
       return 1;
     } else if (
-      boxs[0].value === "x" &&
-      boxs[4].value === "x" &&
-      boxs[8].value === "x"
+      boxs[0].innerText === "x" &&
+      boxs[4].innerText === "x" &&
+      boxs[8].innerText === "x"
     ) {
       return 1;
     } else if (
-      boxs[2].value === "x" &&
-      boxs[4].value === "x" &&
-      boxs[6].value === "x"
+      boxs[2].innerText === "x" &&
+      boxs[4].innerText === "x" &&
+      boxs[6].innerText === "x"
     ) {
       return 1;
     } else if (
-      boxs[3].value === "x" &&
-      boxs[4].value === "x" &&
-      boxs[5].value === "x"
+      boxs[3].innerText === "x" &&
+      boxs[4].innerText === "x" &&
+      boxs[5].innerText === "x"
     ) {
       return 1;
     } else if (
-      boxs[6].value === "x" &&
-      boxs[7].value === "x" &&
-      boxs[8].value === "x"
+      boxs[6].innerText === "x" &&
+      boxs[7].innerText === "x" &&
+      boxs[8].innerText === "x"
     ) {
       return 1;
     } else if (
-      boxs[2].value === "x" &&
-      boxs[5].value === "x" &&
-      boxs[8].value === "x"
+      boxs[2].innerText === "x" &&
+      boxs[5].innerText === "x" &&
+      boxs[8].innerText === "x"
     ) {
       return 1;
     } else if (
-      boxs[0].value === "x" &&
-      boxs[3].value === "x" &&
-      boxs[6].value === "x"
+      boxs[0].innerText === "x" &&
+      boxs[3].innerText === "x" &&
+      boxs[6].innerText === "x"
     ) {
       return 1;
     } else if (
-      boxs[1].value === "x" &&
-      boxs[4].value === "x" &&
-      boxs[7].value === "x"
+      boxs[1].innerText === "x" &&
+      boxs[4].innerText === "x" &&
+      boxs[7].innerText === "x"
     ) {
       return 1;
     }
@@ -123,12 +123,12 @@ const Gameapp = () => {
     var boxs = document.querySelectorAll("#box");
     if (boxs[where].value === "") {
       if (c % 2 === 0) {
-        boxs[where].value = "o";
+        boxs[where].innerText = "o";
         document.body.style.backgroundColor = "rgb(227, 36, 43,0.8)";
         document.querySelector(".name h1").style.color = "#E97451";
         document.querySelector(".name h1").innerText = "Red Time";
       } else {
-        boxs[where].value = "x";
+        boxs[where].innerText = "x";
         document.body.style.backgroundColor = "rgb(19, 56, 190, 0.8)";
         document.querySelector(".name h1").style.color = "#0096FF";
         document.querySelector(".name h1").innerText = "Blue Time";
@@ -217,9 +217,9 @@ const Gameapp = () => {
     var boxs = document.querySelectorAll("#box");
 
     for (var i = 0; i < 9; i++) {
-      boxs[i].value = "";
+      boxs[i].innerText = "";
     }
-    if (gameover == 3) {
+    if (gameover === 3) {
       setOpoint(0);
       setXpoint(0);
       o = 0;
@@ -241,33 +241,30 @@ const Gameapp = () => {
         </div>
       </div>
       <div className="game" id="game">
-        <input
-          type="button"
+        <button
           id="box"
           onClick={() => {
             getactive(0);
           }}
         />
-        <input
-          type="button"
+        <button
           id="box"
           onClick={() => {
             getactive(1);
           }}
         />
-        <input
-          type="button"
+        <button
           id="box"
           onClick={() => {
             getactive(2);
           }}
         />
-        <input type="button" id="box" onClick={() => getactive(3)} />
-        <input type="button" id="box" onClick={() => getactive(4)} />
-        <input type="button" id="box" onClick={() => getactive(5)} />
-        <input type="button" id="box" onClick={() => getactive(6)} />
-        <input type="button" id="box" onClick={() => getactive(7)} />
-        <input type="button" id="box" onClick={() => getactive(8)} />
+        <button id="box" onClick={() => getactive(3)}></button>
+        <button id="box" onClick={() => getactive(4)}></button>
+        <button id="box" onClick={() => getactive(5)}></button>
+        <button id="box" onClick={() => getactive(6)}></button>
+        <button id="box" onClick={() => getactive(7)}></button>
+        <button id="box" onClick={() => getactive(8)}></button>
       </div>
 
       <div className="name">

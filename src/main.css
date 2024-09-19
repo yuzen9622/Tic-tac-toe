@@ -16,7 +16,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     transition: all 0.5s;
-
+gap: 5px;
 
 }
 .single{
@@ -25,7 +25,7 @@ body {
     justify-content: center;
     align-items: center;
 }
-.game input {
+.game button {
     width: 60px;
     height: 60px;
     text-align: center;
@@ -33,13 +33,15 @@ body {
     background-color: transparent;
     display: flex;
     flex-direction: column;
+    border: 3px solid #333;
     align-items: center;
+    gap: 5px;
     justify-content: center;
     border-radius: 5px;
     color: #fff;
 }
 
-.game input:nth-child(1) {
+/* .game input:nth-child(1) {
     border: none;
     border-bottom: 5px solid #fff;
     border-right: 5px solid #fff;
@@ -91,7 +93,7 @@ body {
     border-left: 5px solid #fff;
     border-top: 5px solid #fff;
 
-}
+} */
 
 .start input {
     margin-top: 20px;
@@ -173,8 +175,10 @@ h2 {
  .winInputO{
     background-color: #0087e8 !important;
     color: #ffffff !important;
+    border:3px solid #fff !important;
  }
  .winInputX{
     background-color: rgb(227, 36, 43,0.8) !important;
     color: #ffffff !important;
+    border:3px solid #fff !important;
  }

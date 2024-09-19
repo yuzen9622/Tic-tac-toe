@@ -170,9 +170,8 @@ export default function Online() {
           <div className="single">
             <div className="game" id="game">
               {checkBoard.map((chess, key) => (
-                <input
+                <button
                   key={key}
-                  type="button"
                   className={`chess ${
                     winStatArray?.some((item) => item === key) && chess === "O"
                       ? "winInputO"
@@ -182,9 +181,10 @@ export default function Online() {
                       ? "winInputX"
                       : ""
                   }`}
-                  value={chess}
                   onClick={(e) => onClickButton(e, key)}
-                />
+                >
+                  {chess}
+                </button>
               ))}
             </div>
           </div>
