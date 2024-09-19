@@ -121,7 +121,7 @@ const Gameapp = () => {
   }
   function getactive(where) {
     var boxs = document.querySelectorAll("#box");
-    if (boxs[where].value === "") {
+    if (boxs[where].innerText === "") {
       if (c % 2 === 0) {
         boxs[where].innerText = "o";
         document.body.style.backgroundColor = "rgb(227, 36, 43,0.8)";
