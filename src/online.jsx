@@ -103,6 +103,7 @@ export default function Online() {
     setTimeout(() => {
       setplayer(null);
       setRecipientPlayer(null);
+      setFinish(false);
     }, 3000);
   });
 
@@ -116,6 +117,7 @@ export default function Online() {
       setTimeout(() => {
         setplayer(null);
         setRecipientPlayer(null);
+        setFinish(false);
       }, 3000);
     }
   }, [checkBoard]);
