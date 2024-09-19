@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { io } from "socket.io-client";
-
+import { url } from "./servirce";
 let renderFrom = ["", "", "", "", "", "", "", "", ""];
 
 export default function Online() {
@@ -11,7 +11,7 @@ export default function Online() {
   const [currentPlayer, setCurrentPlayer] = useState("O");
   const [PlayAs, setPlayAs] = useState("");
   const [finish, setFinish] = useState(null);
-
+  const [winStatArray, setWinStateArray] = useState([]);
   const [socket, setSocket] = useState(null);
 
   const onClickButton = (e, key) => {
@@ -42,7 +42,7 @@ export default function Online() {
   };
 
   const checkWinner = () => {
-    let winner = false;
+    let winner = { winner: null, winnerArray: [] };
     const winningCombinations = [
       [0, 1, 2],
       [0, 4, 8],
@@ -61,18 +61,20 @@ export default function Online() {
         checkBoard[b] === "O" &&
         checkBoard[c] === "O"
       ) {
-        winner = "O";
+        winner.winnerArray = combo;
+        winner.winner = "O";
       } else if (
         checkBoard[a] === "X" &&
         checkBoard[b] === "X" &&
         checkBoard[c] === "X"
       ) {
-        winner = "X";
+        winner.winnerArray = combo;
+        winner.winner = "X";
       }
     });
     let isDraw = checkBoard.every((value) => value !== "");
     if (isDraw) {
-      winner = "draw";
+      winner.winner = "draw";
     }
 
     return winner;
@@ -99,25 +101,32 @@ export default function Online() {
 
   socket?.on("finishState", (data) => {
     setFinish(data.winner);
-    setCheckBoard(renderFrom);
+    setWinStateArray(data.winnerArray);
     setTimeout(() => {
+      setCheckBoard(renderFrom);
       setplayer(null);
       setRecipientPlayer(null);
       setFinish(false);
+      setCurrentPlayer("O");
+      setWinStateArray([]);
     }, 3000);
   });
 
   useEffect(() => {
     const winner = checkWinner();
 
-    if (winner) {
-      setFinish(winner);
-      socket.emit("finish", { winner });
-      setCheckBoard(renderFrom);
+    if (winner.winner) {
+      setFinish(winner.winner);
+      socket.emit("finish", winner);
+      setWinStateArray(winner.winnerArray);
+      console.log(winner.winnerArray);
       setTimeout(() => {
         setplayer(null);
         setRecipientPlayer(null);
         setFinish(false);
+        setCurrentPlayer("O");
+        setCheckBoard(renderFrom);
+        setWinStateArray([]);
       }, 3000);
     }
   }, [checkBoard]);
@@ -126,7 +135,7 @@ export default function Online() {
     let name = window.prompt("輸入名子");
     if (name) {
       setplayer(name);
-      const newSocket = io("https://tic-tac-toe-socket-server.onrender.com", {
+      const newSocket = io(url, {
         autoConnect: true,
       });
       newSocket?.emit("join", { playerName: name });
@@ -164,7 +173,15 @@ export default function Online() {
                 <input
                   key={key}
                   type="button"
-                  className="chess"
+                  className={`chess ${
+                    winStatArray?.some((item) => item === key) && chess === "O"
+                      ? "winInputO"
+                      : ""
+                  } ${
+                    winStatArray?.some((item) => item === key) && chess === "X"
+                      ? "winInputX"
+                      : ""
+                  }`}
                   value={chess}
                   onClick={(e) => onClickButton(e, key)}
                 />

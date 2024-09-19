@@ -170,3 +170,11 @@ h2 {
  .currentState{
     background-color:rgb(227, 36, 43,0.8) ;
  }
+ .winInputO{
+    background-color: #0087e8 !important;
+    color: #ffffff !important;
+ }
+ .winInputX{
+    background-color: rgb(227, 36, 43,0.8) !important;
+    color: #ffffff !important;
+ }
