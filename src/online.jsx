@@ -249,7 +249,7 @@ export default function Online() {
             >
               <div class="no-Player"></div>
               <button className="share-btn" onClick={share}>
-                SHARE <i class="fa-solid fa-share-nodes"></i>
+                Share
               </button>
             </div>
           )}

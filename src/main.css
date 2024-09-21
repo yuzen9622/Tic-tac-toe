@@ -221,7 +221,7 @@ h2 {
     animation: l1 1s linear infinite alternate;
   }
   .loader:before {
-    content:"Loading..."
+    content:"Connect to server..."
   }
  
   @keyframes l1 {to{opacity: 0}}
@@ -237,7 +237,7 @@ h2 {
   }
 
   .no-Player::before {
-    content: "No Player Yet";
+    content: "No Player Yet...";
     line-height: 1em;
     color: #0000;
     background: inherit;
@@ -252,17 +252,20 @@ h2 {
   }
 
   .share-btn{
+width: 150px;
   padding: 5px 10px;
     background-color: #0096ff;
     border: none;
     font-weight: 500;
     font-size: 18px;
-    border-radius: 25px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    border-radius: 30px;
+   font-family: monospace;
     text-align: center;
     margin-top: 10px;
     line-height: 40px;
     cursor: pointer;
+    border: 3px solid transparent;
     letter-spacing: 2px;
     color: #EEEEED;
+    transition: all .5s ;
   }

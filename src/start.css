@@ -30,7 +30,7 @@ font-size: 20px;
 transition: all .5s;
 }
 
-.mode a:hover,.mode button:hover{
+.mode a:hover,.mode button:hover,  .share-btn:hover{
     color:#fff;
     border: 3px solid #fff;
     border-radius: 15px;
