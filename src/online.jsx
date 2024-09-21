@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router";
+
 import { io } from "socket.io-client";
 import { url } from "./servirce";
 let renderFrom = ["", "", "", "", "", "", "", "", ""];
@@ -81,7 +81,13 @@ export default function Online() {
 
     return winner;
   };
-
+  const share = async () => {
+    await navigator.share({
+      title: "TicTacToe",
+      text: "Play with your friends",
+      url: "https://yuzen9622.github.io/Tic-tac-toe/",
+    });
+  };
   socket?.on("recipientPlayerNotFound", () => {
     setRecipientPlayer(false);
   });
@@ -229,8 +235,23 @@ export default function Online() {
                 )}
               </div>
             ))
+          ) : !Array.isArray(allUsers) ? (
+            <>
+              <div class="loader"></div>
+            </>
           ) : (
-            <>目前暫無玩家</>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <div class="no-Player"></div>
+              <button className="share-btn" onClick={share}>
+                SHARE <i class="fa-solid fa-share-nodes"></i>
+              </button>
+            </div>
           )}
         </div>
       )}
