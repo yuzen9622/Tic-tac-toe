@@ -13,7 +13,7 @@ export default function Online() {
   const [finish, setFinish] = useState(null);
   const [winStatArray, setWinStateArray] = useState([]);
   const [socket, setSocket] = useState(null);
-
+  const [allUsers, setAllUsers] = useState(null);
   const onClickButton = (e, key) => {
     if (finish) return;
     if (currentPlayer !== PlayAs) return;
@@ -40,7 +40,9 @@ export default function Online() {
     });
     setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
   };
-
+  const connectPlayer = (socketId) => {
+    socket?.emit("findPlayer", socketId);
+  };
   const checkWinner = () => {
     let winner = { winner: null, winnerArray: [] };
     const winningCombinations = [
@@ -99,12 +101,22 @@ export default function Online() {
     setCurrentPlayer(data.state.currentPlayer === "O" ? "X" : "O");
   });
 
+  socket?.on("allUser", (data) => {
+    console.log(data);
+    let users = data?.filter(
+      (item) => item.socketId !== socket.id && item.online === true
+    );
+    if (users) {
+      setAllUsers(users);
+    }
+  });
+
   socket?.on("finishState", (data) => {
     setFinish(data.winner);
     setWinStateArray(data.winnerArray);
     setTimeout(() => {
       setCheckBoard(renderFrom);
-      setplayer(null);
+
       setRecipientPlayer(null);
       setFinish(false);
       setCurrentPlayer("O");
@@ -121,7 +133,6 @@ export default function Online() {
       setWinStateArray(winner.winnerArray);
       console.log(winner.winnerArray);
       setTimeout(() => {
-        setplayer(null);
         setRecipientPlayer(null);
         setFinish(false);
         setCurrentPlayer("O");
@@ -201,7 +212,27 @@ export default function Online() {
           )}
         </>
       ) : (
-        <>connect...</>
+        <div className="allPlayers">
+          {allUsers && allUsers?.length > 0 ? (
+            allUsers.map((player, key) => (
+              <div key={key} className="players">
+                <p>{player.playerName}</p>
+                {player.playing ? (
+                  <p>正在遊戲中...</p>
+                ) : (
+                  <button
+                    disabled={player.playing}
+                    onClick={() => connectPlayer(player.socketId)}
+                  >
+                    決鬥
+                  </button>
+                )}
+              </div>
+            ))
+          ) : (
+            <>目前暫無玩家</>
+          )}
+        </div>
       )}
     </div>
   );

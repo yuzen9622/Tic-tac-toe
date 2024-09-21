@@ -182,3 +182,34 @@ h2 {
     color: #ffffff !important;
     border:3px solid #fff !important;
  }
+
+ .players{
+    background: #0096ff;
+    padding: 5px;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+ }
+ .players button{
+    align-items: center;
+    background: #0096ff;
+  border-radius: 5px;
+    color: #1338becc;
+    display: flex;
+
+    font-weight: 700;
+    justify-content: center;
+    margin: 10px;
+    padding: 10px 10px;
+    text-decoration: none;
+    transition: all .5s;
+   
+ }
+ .players p{
+    color: white;
+ }
+ .allPlayers{
+    display: flex;
+ }
