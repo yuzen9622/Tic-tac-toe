@@ -1,232 +1,129 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./main.css";
 
-var o = 0;
-var x = 0;
-var gameover = 0;
+const renderFrom = ["", "", "", "", "", "", "", "", ""];
+
 const Gameapp = () => {
-  var c = 0;
-  var t = 0;
-  var winnub = 3;
-  const [play, setplay] = useState();
-  const [player, setplayer] = useState("");
-  const [Opoint, setOpoint] = useState(0);
+  const [chessBoard, setChessBoard] = useState(renderFrom);
   const [Xpoint, setXpoint] = useState(0);
-  function win() {
-    t++;
-    var boxs = document.querySelectorAll("#box");
-    if (
-      boxs[0].innerText === "o" &&
-      boxs[1].innerText === "o" &&
-      boxs[2].innerText === "o"
-    ) {
-      console.log("o win");
-      return 0;
-    } else if (
-      boxs[0].innerText === "o" &&
-      boxs[4].innerText === "o" &&
-      boxs[8].innerText === "o"
-    ) {
-      return 0;
-    } else if (
-      boxs[2].innerText === "o" &&
-      boxs[4].innerText === "o" &&
-      boxs[6].innerText === "o"
-    ) {
-      return 0;
-    } else if (
-      boxs[3].innerText === "o" &&
-      boxs[4].innerText === "o" &&
-      boxs[5].innerText === "o"
-    ) {
-      return 0;
-    } else if (
-      boxs[6].innerText === "o" &&
-      boxs[7].innerText === "o" &&
-      boxs[8].innerText === "o"
-    ) {
-      return 0;
-    } else if (
-      boxs[2].innerText === "o" &&
-      boxs[5].innerText === "o" &&
-      boxs[8].innerText === "o"
-    ) {
-      return 0;
-    } else if (
-      boxs[0].innerText === "o" &&
-      boxs[3].innerText === "o" &&
-      boxs[6].innerText === "o"
-    ) {
-      return 0;
-    } else if (
-      boxs[1].innerText === "o" &&
-      boxs[4].innerText === "o" &&
-      boxs[7].innerText === "o"
-    ) {
-      return 0;
-    }
-
-    if (
-      boxs[0].innerText === "x" &&
-      boxs[1].innerText === "x" &&
-      boxs[2].innerText === "x"
-    ) {
-      return 1;
-    } else if (
-      boxs[0].innerText === "x" &&
-      boxs[4].innerText === "x" &&
-      boxs[8].innerText === "x"
-    ) {
-      return 1;
-    } else if (
-      boxs[2].innerText === "x" &&
-      boxs[4].innerText === "x" &&
-      boxs[6].innerText === "x"
-    ) {
-      return 1;
-    } else if (
-      boxs[3].innerText === "x" &&
-      boxs[4].innerText === "x" &&
-      boxs[5].innerText === "x"
-    ) {
-      return 1;
-    } else if (
-      boxs[6].innerText === "x" &&
-      boxs[7].innerText === "x" &&
-      boxs[8].innerText === "x"
-    ) {
-      return 1;
-    } else if (
-      boxs[2].innerText === "x" &&
-      boxs[5].innerText === "x" &&
-      boxs[8].innerText === "x"
-    ) {
-      return 1;
-    } else if (
-      boxs[0].innerText === "x" &&
-      boxs[3].innerText === "x" &&
-      boxs[6].innerText === "x"
-    ) {
-      return 1;
-    } else if (
-      boxs[1].innerText === "x" &&
-      boxs[4].innerText === "x" &&
-      boxs[7].innerText === "x"
-    ) {
-      return 1;
-    }
-    if (t === 9) {
-      return 2;
-    }
-  }
-  function getactive(where) {
-    var boxs = document.querySelectorAll("#box");
-    if (boxs[where].innerText === "") {
-      if (c % 2 === 0) {
-        boxs[where].innerText = "o";
-        document.body.style.backgroundColor = "rgb(227, 36, 43,0.8)";
-        document.querySelector(".name h1").style.color = "#E97451";
-        document.querySelector(".name h1").innerText = "Red Time";
-      } else {
-        boxs[where].innerText = "x";
-        document.body.style.backgroundColor = "rgb(19, 56, 190, 0.8)";
-        document.querySelector(".name h1").style.color = "#0096FF";
-        document.querySelector(".name h1").innerText = "Blue Time";
-      }
-
-      winnub = win();
-
-      if (winnub === 0) {
-        var timeout = window.setInterval(() => {
-          end("O獲勝");
-          setTimeout(() => {
-            document.getElementById("game").style.display = "grid";
-            document.body.style.backgroundColor = "rgb(19, 56, 190, 0.8)";
-            document.querySelector(".name h1").innerText = "Blue Time";
-            document.querySelector(".name h1").style.color = "#0096FF";
-            clear();
-          }, 3000);
-
-          window.clearInterval(timeout);
-        }, 0);
-        o += 1;
-        setOpoint(o);
-      } else if (winnub === 1) {
-        var timeout = window.setInterval(() => {
-          end("X獲勝");
-          setTimeout(() => {
-            document.getElementById("game").style.display = "grid";
-            document.body.style.backgroundColor = "rgb(19, 56, 190, 0.8)";
-            document.querySelector(".name h1").innerText = "Blue Time";
-            document.querySelector(".name h1").style.color = "#0096FF";
-            clear();
-          }, 3000);
-
-          window.clearInterval(timeout);
-        });
-
-        x += 1;
-        setXpoint(x);
-      } else if (winnub == 2) {
-        var timeout = window.setInterval(() => {
-          end("平手");
-          setTimeout(() => {
-            document.getElementById("game").style.display = "grid";
-            document.body.style.backgroundColor = "rgb(19, 56, 190, 0.8)";
-            document.querySelector("h1").innerText = "Blue Time";
-            document.querySelector("h1").style.color = "#0096FF";
-            clear();
-          }, 3000);
-          window.clearInterval(timeout);
-        });
-      }
-      console.log(Opoint, Xpoint);
-      c++;
-    }
-  }
-
-  function end(statue) {
-    t = 0;
-    c = 0;
-    winnub = 3;
-
-    statue !== "平手" ? gameover++ : (gameover = gameover);
-    console.log(gameover);
-
-    if (gameover === 3) {
-      if (o > x) {
-        document.getElementById("game").style.display = "none";
-        document.body.style.backgroundColor = "#0096FF";
-        document.querySelector(".name h1").innerText = "Blue Win";
-        document.querySelector(".name h1").style.color = "#fff";
-      } else {
-        document.getElementById("game").style.display = "none";
-        document.body.style.backgroundColor = "#E97451";
-        document.querySelector(".name h1").innerText = "Red Win";
-        document.querySelector(".name h1").style.color = "#fff";
-      }
+  const [Opoint, setOpoint] = useState(0);
+  const [currentPlayer, setCurrentPlayer] = useState("O");
+  const [finish, setFinish] = useState(null);
+  const [finishArrayState, setFinishArrayState] = useState(null);
+  const [winner, setWinner] = useState(null);
+  const onClickButton = (key) => {
+    if (chessBoard[key] !== "") return;
+    if (finish) return;
+    if (currentPlayer === "O") {
+      setChessBoard((prev) => {
+        let newPrev = [...prev];
+        newPrev[key] = "O";
+        return newPrev;
+      });
     } else {
-      document.getElementById("game").style.display = "none";
-      document.body.style.backgroundColor = "#42fc67";
-      document.querySelector(".name h1").innerText = statue;
-      document.querySelector(".name h1").style.color = "#fff";
+      setChessBoard((prev) => {
+        let newPrev = [...prev];
+        newPrev[key] = "X";
+        return newPrev;
+      });
     }
-  }
+    setCurrentPlayer(currentPlayer === "O" ? "X" : "O");
+  };
 
-  function clear() {
-    var boxs = document.querySelectorAll("#box");
+  const checkWinner = () => {
+    let winner = { winner: null, winnerArray: [] };
+    const winningCombinations = [
+      [0, 1, 2],
+      [0, 4, 8],
+      [2, 4, 6],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+    ];
 
-    for (var i = 0; i < 9; i++) {
-      boxs[i].innerText = "";
+    winningCombinations.forEach((combo) => {
+      const [a, b, c] = combo;
+      if (
+        chessBoard[a] === "O" &&
+        chessBoard[b] === "O" &&
+        chessBoard[c] === "O"
+      ) {
+        winner.winnerArray = combo;
+        winner.winner = "O";
+      } else if (
+        chessBoard[a] === "X" &&
+        chessBoard[b] === "X" &&
+        chessBoard[c] === "X"
+      ) {
+        winner.winnerArray = combo;
+        winner.winner = "X";
+      }
+    });
+
+    let isDraw = chessBoard.every((value) => value !== "");
+    if (isDraw && !winner.winner) {
+      winner.winner = "draw";
     }
-    if (gameover === 3) {
-      setOpoint(0);
-      setXpoint(0);
-      o = 0;
-      x = 0;
-      gameover = 0;
+
+    return winner;
+  };
+
+  useEffect(() => {
+    const { winner, winnerArray } = checkWinner();
+
+    if (winner) {
+      if (winner === "O") {
+        setOpoint((prev) => prev + 1);
+      } else if (winner === "X") {
+        setXpoint((prev) => prev + 1);
+      }
+
+      setFinish(winner);
+      setFinishArrayState(winnerArray);
+      setTimeout(() => {
+        setFinish(null);
+        setFinishArrayState(null);
+        setChessBoard(renderFrom);
+        setCurrentPlayer("O");
+      }, 3000);
     }
-  }
+  }, [chessBoard]);
+
+  useEffect(() => {
+    if (Xpoint === 2) {
+      setWinner("X");
+      setTimeout(() => {
+        setXpoint(0);
+        setOpoint(0);
+        setWinner(null);
+      }, 3000);
+    } else if (Opoint === 2) {
+      setWinner("O");
+      setTimeout(() => {
+        setXpoint(0);
+        setOpoint(0);
+        setWinner(null);
+      }, 3000);
+    }
+  }, [Xpoint, Opoint]);
+
+  useEffect(() => {
+    let body = document.body;
+    let stateEl = document.querySelector("#state");
+    if (finish) {
+      body.style.backgroundColor =
+        finish === "O" ? "#1338becc" : "rgba(227, 36, 43, 0.8)";
+
+      stateEl.style.color = finish === "O" ? "#0096ff" : "rgb(233, 116, 81)";
+      return;
+    }
+    body.style.backgroundColor =
+      currentPlayer === "O" ? "#1338becc" : "rgba(227, 36, 43, 0.8)";
+    stateEl.style.color =
+      currentPlayer === "O" ? "#0096ff" : "rgb(233, 116, 81)";
+  }, [currentPlayer, finish]);
 
   return (
     <div className="single">
@@ -241,34 +138,40 @@ const Gameapp = () => {
         </div>
       </div>
       <div className="game" id="game">
-        <button
-          id="box"
-          onClick={() => {
-            getactive(0);
-          }}
-        />
-        <button
-          id="box"
-          onClick={() => {
-            getactive(1);
-          }}
-        />
-        <button
-          id="box"
-          onClick={() => {
-            getactive(2);
-          }}
-        />
-        <button id="box" onClick={() => getactive(3)}></button>
-        <button id="box" onClick={() => getactive(4)}></button>
-        <button id="box" onClick={() => getactive(5)}></button>
-        <button id="box" onClick={() => getactive(6)}></button>
-        <button id="box" onClick={() => getactive(7)}></button>
-        <button id="box" onClick={() => getactive(8)}></button>
+        {!winner &&
+          chessBoard.map((chess, key) => (
+            <button
+              key={key}
+              id="box"
+              className={`chess ${
+                finishArrayState &&
+                finishArrayState.some((item) => item === key) &&
+                chess === "O"
+                  ? "winInputO"
+                  : ""
+              } ${
+                finishArrayState &&
+                finishArrayState.some((item) => item === key) &&
+                chess === "X"
+                  ? "winInputX"
+                  : ""
+              }`}
+              onClick={() => onClickButton(key)}
+            >
+              {chess}
+            </button>
+          ))}
       </div>
 
-      <div className="name">
-        <h1>Blue Time</h1>
+      <div className="name" id="state">
+        {!finish && !winner && (
+          <h1>{currentPlayer === "O" ? "Blue Time" : "Red Time"}</h1>
+        )}
+        {finish && finish !== "draw" && !winner && (
+          <h1>{finish === "O" ? "O 贏了" : "X 贏了"}</h1>
+        )}
+        {finish && finish === "draw" && !winner && <h1>平手</h1>}
+        {winner && <h1>{winner === "O" ? "Blue Win" : "Red Win"}</h1>}
       </div>
     </div>
   );

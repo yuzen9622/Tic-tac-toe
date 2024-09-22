@@ -213,7 +213,7 @@ export default function Online() {
           </div>
           {currentPlayer === PlayAs && !finish && (
             <div className="name">
-              <h1>Your Turn</h1>
+              <h1 style={{ color: "rgb(0, 150, 255);" }}>Your Turn</h1>
             </div>
           )}
         </>
