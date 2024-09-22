@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import { io } from "socket.io-client";
 import { url } from "./servirce";
 let renderFrom = ["", "", "", "", "", "", "", "", ""];
@@ -40,9 +39,11 @@ export default function Online() {
     });
     setCurrentPlayer(currentPlayer === "O" ? "X" : "O");
   };
+
   const connectPlayer = (socketId) => {
     socket?.emit("findPlayer", socketId);
   };
+
   const checkWinner = () => {
     let winner = { winner: null, winnerArray: [] };
     const winningCombinations = [
@@ -88,6 +89,7 @@ export default function Online() {
       url: "https://yuzen9622.github.io/Tic-tac-toe/",
     });
   };
+
   socket?.on("recipientPlayerNotFound", () => {
     setRecipientPlayer(false);
   });
@@ -108,7 +110,6 @@ export default function Online() {
   });
 
   socket?.on("allUser", (data) => {
-    console.log(data);
     let users = data?.filter(
       (item) => item.socketId !== socket.id && item.online === true
     );
