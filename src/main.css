@@ -177,7 +177,7 @@ h2 {
     font-weight: bold;
     font-family: monospace;
     font-size: 30px;
-    background: radial-gradient(circle closest-side,#000 94%,#000) right/calc(200% - 1em) 100%;
+    background: radial-gradient(circle closest-side,#000 100%,transparent) right/calc(200% - 1em) 100%;
     animation: l24 1s infinite alternate linear;
  
   }

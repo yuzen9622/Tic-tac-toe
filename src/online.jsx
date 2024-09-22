@@ -38,7 +38,7 @@ export default function Online() {
         currentPlayer: currentPlayer,
       },
     });
-    setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
+    setCurrentPlayer(currentPlayer === "O" ? "X" : "O");
   };
   const connectPlayer = (socketId) => {
     socket?.emit("findPlayer", socketId);
@@ -101,7 +101,7 @@ export default function Online() {
     console.log("data from server", data);
     setCheckBoard((prev) => {
       const newPrev = [...prev];
-      newPrev[data.state.key] = currentPlayer;
+      newPrev[data.state.key] = data.state.currentPlayer;
       return newPrev;
     });
     setCurrentPlayer(data.state.currentPlayer === "O" ? "X" : "O");
