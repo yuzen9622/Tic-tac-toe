@@ -1,0 +1,54 @@
+
+
+.history{
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.history-players{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.history-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 75%;
+ max-height: 90%;
+ overflow-y: auto;
+
+ 
+}
+.historyCom{
+    width: 90%;
+    text-align: center;
+      margin: 10px;
+      padding: 10px;
+  
+    border: 2px solid white;
+    border-radius: 15px;
+}
+.winner{
+    font-weight: 600;
+}
+.history-state{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.time{
+    font-size: 16px;
+}
+.recipientPlayer{
+    font-size: 1.3em;
+    font-weight: 600;
+ 
+}

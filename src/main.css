@@ -8,7 +8,8 @@ body {
     justify-content: center;
     align-items: center;
     width: 100vw;
-    height: 100vh;
+    height: 90vh;
+  
     background-color: rgb(19, 56, 190, 0.8);
 }
 
@@ -16,15 +17,18 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     transition: all 0.5s;
-gap: 5px;
+    gap: 5px;
 
 }
-.single{
+.single,.online{
+height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
+
 .game button {
     width: 60px;
     height: 60px;
@@ -128,6 +132,55 @@ h2 {
     color: #ffffff !important;
     border:3px solid #fff !important;
  }
+
+ .popbox{
+    z-index: 100;
+    position: absolute;
+    background-color: #333333b9;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  
+ }
+
+ .popbox input,.popbox button{
+    background: #0096ff;
+    border: 2px solid transparent;
+    border-radius: 5px;
+      color: #1338becc;
+      font-weight: 600;
+      margin: 10px;
+      padding: 10px 10px;
+    font-size: 18px;
+    transition: all .3s;
+     
+ }
+ .popbox input::placeholder{
+       color: white; 
+ }
+ .popbox input:focus{
+    outline: none;
+    border: 2px solid white;
+    color: white; 
+ }
+
+
+
+ .popbox button:hover{
+  border: 2px solid white;
+  color: white;
+ }
+
+.error{
+
+  color: #e97451;
+  font-weight: 600;
+}
 
  .players{
     background: #0096ff;
