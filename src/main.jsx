@@ -92,10 +92,6 @@ const Gameapp = () => {
   }, [chessBoard]);
 
   useEffect(() => {
-    handleLocationChange();
-  });
-
-  useEffect(() => {
     if (Xpoint === 2) {
       setWinner("X");
       setTimeout(() => {

@@ -29,7 +29,6 @@ export default function HistoryPage() {
   };
 
   useEffect(() => {
-    handleLocationChange();
     fetchHistory();
   }, [user]);
 

@@ -14,12 +14,17 @@ export default function Online() {
   const [PlayAs, setPlayAs] = useState("");
   const [finish, setFinish] = useState(null);
   const [winStatArray, setWinStateArray] = useState([]);
-  const [socket, setSocket] = useState(null);
+  // const [socket, setSocket] = useState(null);
   const [allUsers, setAllUsers] = useState(null);
-  const { user, updateLoginInfo, loginInfo, updateUserInfo } =
-    useContext(UserContext);
-
-  const [error, setError] = useState("");
+  const {
+    user,
+    updateLoginInfo,
+    loginInfo,
+    updateUserInfo,
+    loginUser,
+    socket,
+    error,
+  } = useContext(UserContext);
 
   const onClickButton = (e, key) => {
     if (finish) return;
@@ -154,7 +159,7 @@ export default function Online() {
     } else {
       openPop();
     }
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const winner = checkWinner();
@@ -213,62 +218,22 @@ export default function Online() {
     popbox.style.display = "none";
   }
 
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
-
   async function start() {
     try {
       if (!user?.id) {
-        if (!validateEmail(loginInfo?.email)) {
-          setError("請輸入合法電子郵件!");
-          return;
-        }
-        if (loginInfo?.name === "") {
-          setError("不可為空白");
-          return;
-        }
-        const res = await fetch(`${server_url}/user/login`, {
-          method: "post",
-          headers: { "Content-Type": "Application/json" },
-          body: JSON.stringify(loginInfo),
-        });
-        const data = await res.json();
-        if (res.ok) {
-          sessionStorage.setItem("player_info", JSON.stringify(data));
-          updateUserInfo(data);
-          setplayer(data);
-          const newSocket = io(url, {
-            autoConnect: true,
-          });
-          newSocket?.emit("join", { playerName: data });
-          setSocket(newSocket);
+        let isLogin = await loginUser();
+        if (isLogin) {
           closePop();
-        } else {
-          setError(data?.message);
-          sessionStorage.removeItem("player_info");
         }
       } else {
         setplayer(user);
-        const newSocket = io(url, {
-          autoConnect: true,
-        });
-        newSocket?.emit("join", { playerName: user });
-        setSocket(newSocket);
+
         closePop();
       }
     } catch (error) {
       console.error(error);
       updateLoginInfo({ email: "", password: "" });
       sessionStorage.removeItem("player_info");
-    } finally {
-      setTimeout(() => {
-        setError("");
-      }, 3000);
     }
   }
 

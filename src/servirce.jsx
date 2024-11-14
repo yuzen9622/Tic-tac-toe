@@ -1,13 +1,16 @@
 export const url = "https://tic-tac-toe-socket-server.onrender.com";
 //export const url = "http://localhost:5000";
-//export const server_url = "http://localhost:8080/api/v1";
-export const server_url = "https://tic-tac-toe-java-server.onrender.com/api/v1";
-export const handleLocationChange = () => {
+export const server_url = "http://localhost:8080/api/v1";
+//export const server_url = "https://tic-tac-toe-java-server.onrender.com/api/v1";
+export const handleLocationChange = (socket) => {
   // 檢查是否切換到 online 頁面，並且確認是否已經重載過
-  if (sessionStorage.getItem("hasReloaded") === "false") {
-    console.log("即將切換到 online 頁面，先刷新一次");
+  if (
+    sessionStorage.getItem("hasReloaded") === "false" &&
+    window.location.hash !== "#/online"
+  ) {
+    console.log(window.location.hash);
     sessionStorage.setItem("hasReloaded", "true"); // 設置已重載標記
-    window.location.reload(); // 重新加載頁面
+    socket?.disconnect();
   }
 };
 
