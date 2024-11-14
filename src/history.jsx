@@ -1,15 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import "./history.css";
 import HistoryComponet from "./historyComponet";
 import { server_url } from "./servirce";
 import { Link } from "react-router-dom";
+import { handleLocationChange } from "./servirce";
+import { UserContext } from "./userContext";
 export default function HistoryPage() {
-  const [user, setUser] = useState(
-    sessionStorage.getItem("player_info")
-      ? JSON.parse(sessionStorage.getItem("player_info"))
-      : null
-  );
+  const { user } = useContext(UserContext);
   const [history, setHistory] = useState(null);
   const fetchHistory = async () => {
     try {
@@ -31,16 +29,6 @@ export default function HistoryPage() {
   };
 
   useEffect(() => {
-    const handleLocationChange = () => {
-      console.log("路徑變化了:", window.location.href);
-
-      // 檢查是否切換到 online 頁面，並且確認是否已經重載過
-      if (sessionStorage.getItem("hasReloaded") === "false") {
-        console.log("即將切換到 online 頁面，先刷新一次");
-        sessionStorage.setItem("hasReloaded", "true"); // 設置已重載標記
-        window.location.reload(); // 重新加載頁面
-      }
-    };
     handleLocationChange();
     fetchHistory();
   }, [user]);

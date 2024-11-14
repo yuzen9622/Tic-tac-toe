@@ -148,7 +148,7 @@ h2 {
   
  }
 
- .popbox input,.popbox button{
+ .popbox input,.popbox button,.register input ,.register button{
     background: #0096ff;
     border: 2px solid transparent;
     border-radius: 5px;
@@ -160,10 +160,10 @@ h2 {
     transition: all .3s;
      
  }
- .popbox input::placeholder{
+ .popbox input::placeholder, .register input::placeholder{
        color: white; 
  }
- .popbox input:focus{
+ .popbox input:focus,.register input:focus {
     outline: none;
     border: 2px solid white;
     color: white; 
@@ -171,11 +171,20 @@ h2 {
 
 
 
- .popbox button:hover{
+ .popbox button:hover,.register button:hover{
   border: 2px solid white;
   color: white;
  }
-
+.register{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.comment ,.comment a{
+  color: white;
+}
 .error{
 
   color: #e97451;

@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import { server_url, url } from "./servirce";
-import { useLocation } from "react-router-dom";
+import { server_url, url, checkUser } from "./servirce";
+import { Link } from "react-router-dom";
+import { UserContext } from "./userContext";
+
 let renderFrom = ["", "", "", "", "", "", "", "", ""];
 
 export default function Online() {
-  const sessonPlayer =
-    sessionStorage.getItem("player_info") &&
-    JSON.parse(sessionStorage.getItem("player_info"));
   const [checkBoard, setCheckBoard] = useState(renderFrom);
   const [player, setplayer] = useState(null);
   const [recipientPlayer, setRecipientPlayer] = useState(null);
@@ -17,17 +16,8 @@ export default function Online() {
   const [winStatArray, setWinStateArray] = useState([]);
   const [socket, setSocket] = useState(null);
   const [allUsers, setAllUsers] = useState(null);
-  const [user, setUser] = useState(
-    sessionStorage.getItem("player_info")
-      ? {
-          name: sessonPlayer.name,
-          email: sessonPlayer.email,
-        }
-      : {
-          name: "",
-          email: "",
-        }
-  );
+  const { user, updateLoginInfo, loginInfo, updateUserInfo } =
+    useContext(UserContext);
 
   const [error, setError] = useState("");
 
@@ -54,11 +44,14 @@ export default function Online() {
         key: key,
         currentPlayer: currentPlayer,
       },
+      recipientPlayer,
     });
     setCurrentPlayer(currentPlayer === "O" ? "X" : "O");
   };
 
-  const connectPlayer = (socketId) => {
+  const connectPlayer = async (socketId) => {
+    if (!(await checkUser())) return;
+
     socket?.emit("findPlayer", socketId);
   };
 
@@ -113,6 +106,7 @@ export default function Online() {
   });
 
   socket?.on("recipientPlayerFound", (data) => {
+    console.log("get player", data.recipientName);
     setRecipientPlayer(data.recipientName);
     setPlayAs(data.playingAs);
   });
@@ -155,7 +149,7 @@ export default function Online() {
   useEffect(() => {
     sessionStorage.setItem("hasReloaded", "false");
 
-    if (user.name) {
+    if (user?.id) {
       start();
     } else {
       openPop();
@@ -170,8 +164,8 @@ export default function Online() {
       setFinish(winner.winner);
       socket.emit("finish", winner);
       const history = {
-        member1: player.id,
-        member2: recipientPlayer.id,
+        member1: player?.id,
+        member2: recipientPlayer?.id,
         gameStatus: checkBoard,
         winner: [
           winner.winner === "draw"
@@ -205,7 +199,7 @@ export default function Online() {
   }, [checkBoard]);
 
   function openPop() {
-    if (!sessonPlayer?.id) {
+    if (!user?.id) {
       let popbox = document.getElementsByClassName("popbox")[0];
       popbox.style.display = "flex";
     } else {
@@ -229,39 +223,47 @@ export default function Online() {
 
   async function start() {
     try {
-      if (!validateEmail(user.email)) {
-        setError("請輸入合法電子郵件!");
-        return;
-      }
-      if (user.name === "") {
-        setError("不可為空白");
-        return;
-      }
-      const res = await fetch(`${server_url}/user/login`, {
-        method: "post",
-        headers: { "Content-Type": "Application/json" },
-        body: JSON.stringify(user),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        sessionStorage.setItem("player_info", JSON.stringify(data));
-        setplayer(data);
+      if (!user?.id) {
+        if (!validateEmail(loginInfo?.email)) {
+          setError("請輸入合法電子郵件!");
+          return;
+        }
+        if (loginInfo?.name === "") {
+          setError("不可為空白");
+          return;
+        }
+        const res = await fetch(`${server_url}/user/login`, {
+          method: "post",
+          headers: { "Content-Type": "Application/json" },
+          body: JSON.stringify(loginInfo),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          sessionStorage.setItem("player_info", JSON.stringify(data));
+          updateUserInfo(data);
+          setplayer(data);
+          const newSocket = io(url, {
+            autoConnect: true,
+          });
+          newSocket?.emit("join", { playerName: data });
+          setSocket(newSocket);
+          closePop();
+        } else {
+          setError(data?.message);
+          sessionStorage.removeItem("player_info");
+        }
+      } else {
+        setplayer(user);
         const newSocket = io(url, {
           autoConnect: true,
         });
-        newSocket?.emit("join", { playerName: data });
+        newSocket?.emit("join", { playerName: user });
         setSocket(newSocket);
         closePop();
-      } else {
-        setError(data?.message);
-        sessionStorage.removeItem("player_info");
       }
     } catch (error) {
       console.error(error);
-      setUser({
-        name: "",
-        email: "",
-      });
+      updateLoginInfo({ email: "", password: "" });
       sessionStorage.removeItem("player_info");
     } finally {
       setTimeout(() => {
@@ -273,26 +275,35 @@ export default function Online() {
   return (
     <div className="online">
       <div className="popbox">
-        <h3 style={{ fontSize: "25px", color: "white" }}>Register / Login</h3>
-        <input
-          type="text"
-          onChange={(e) => setUser({ ...user, name: e.target.value })}
-          value={user.name}
-          placeholder="name"
-        />
+        <h3 style={{ fontSize: "25px", color: "white" }}>Login</h3>
+
         <input
           type="email"
-          value={user.email}
+          value={loginInfo.email}
           placeholder="email"
-          onChange={(e) => setUser({ ...user, email: e.target.value })}
+          onChange={(e) =>
+            updateLoginInfo({ ...loginInfo, email: e.target.value })
+          }
+        />
+        <input
+          type="password"
+          onChange={(e) =>
+            updateLoginInfo({ ...loginInfo, password: e.target.value })
+          }
+          value={loginInfo.password}
+          placeholder="password"
         />
         <p className="error">{error}</p>
+        <p className="comment">
+          還沒有帳號嗎?<Link to={"/auth/register"}>註冊</Link>
+        </p>
+
         <div className="btn">
           <button onClick={closePop}>取消</button>
           <button onClick={start}>確認</button>
         </div>
       </div>
-      {!player?.id ? (
+      {!user?.id ? (
         <div style={{ position: "relative" }}>
           <div className="mode">
             <button onClick={openPop}>開始</button>
@@ -346,7 +357,12 @@ export default function Online() {
             </div>
             {currentPlayer === PlayAs && !finish && (
               <div className="name">
-                <h1 style={{ color: "rgb(0, 150, 255);" }}>Your Turn</h1>
+                <h1 style={{ color: "rgb(0, 150, 255);" }}>你的回合</h1>
+              </div>
+            )}
+            {currentPlayer !== PlayAs && !finish && (
+              <div className="name">
+                <h1 style={{ color: "rgb(0, 150, 255);" }}>對方的回合</h1>
               </div>
             )}
           </div>

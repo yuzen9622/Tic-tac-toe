@@ -5,9 +5,16 @@
     justify-content: center;
     padding: 5px 0;
 }
-.navbar a{
+.navbar a,.navbar p{
+
     padding: 5px;
     font-size: 20px;
     text-decoration: none;
     color: white;
+}
+.navbar p{
+    text-transform: uppercase;
+    color: white;
+    font-weight: 600;
+    text-decoration: underline dotted;
 }

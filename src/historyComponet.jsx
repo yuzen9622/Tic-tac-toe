@@ -28,11 +28,12 @@ export default function HistoryComponet({ historyItem, user }) {
 
   const formatDateTime = (dateTime) => {
     const time = new Date(dateTime);
-    return `${time.getFullYear()}/${
-      time.getMonth() + 1
-    }/${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${
-      time.getSeconds() < 10 ? "0" + time.getSeconds() : time.getSeconds()
-    }`;
+    return time.toLocaleString("zh-tw", { timeZone: "Asia/Taipei" });
+    // return `${time.getFullYear()}/${
+    //   time.getMonth() + 1
+    // }/${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${
+    //   time.getSeconds() < 10 ? "0" + time.getSeconds() : time.getSeconds()
+    // }`;
   };
 
   useEffect(() => {
@@ -61,12 +62,12 @@ export default function HistoryComponet({ historyItem, user }) {
             parseInt(historyItem?.winner[0]) !== user?.id &&
             "失敗"}
         </p>
-        <p className="recipientPlayer">{recipientPlayer?.name}</p>
+        <p className="recipientPlayer"> {recipientPlayer?.name}</p>
         {historyItem?.winner[1] !== "draw" && (
           <div className="winner">
             {parseInt(historyItem?.winner[0]) === recipientPlayer?.id
               ? "贏家:" + recipientPlayer?.name
-              : "贏家:" + user?.name}
+              : "贏家:你"}
             {historyItem?.winner[1] !== "draw" && historyItem?.winner[1] === "O"
               ? " 狀態:O"
               : " 狀態:X"}
