@@ -3,7 +3,7 @@ import { UserContext } from "./userContext";
 import { Link } from "react-router-dom";
 import "./main.css";
 export default function Register() {
-  const { registerInfo, updateRegisterInfo, error, registerUser } =
+  const { registerInfo, updateRegisterInfo, error, registerUser, isLoading } =
     useContext(UserContext);
 
   return (
@@ -39,7 +39,9 @@ export default function Register() {
       </p>
 
       <div className="btn">
-        <button onClick={() => registerUser()}>註冊</button>
+        <button disabled={isLoading} onClick={() => registerUser()}>
+          {isLoading ? "註冊中..." : "註冊"}
+        </button>
       </div>
     </div>
   );

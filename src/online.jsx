@@ -20,10 +20,10 @@ export default function Online() {
     user,
     updateLoginInfo,
     loginInfo,
-    updateUserInfo,
     loginUser,
     socket,
     error,
+    isLoading,
   } = useContext(UserContext);
 
   const onClickButton = (e, key) => {
@@ -265,7 +265,10 @@ export default function Online() {
 
         <div className="btn">
           <button onClick={closePop}>取消</button>
-          <button onClick={start}>確認</button>
+
+          <button disabled={isLoading} onClick={start}>
+            {isLoading ? "登入中..." : "確認"}
+          </button>
         </div>
       </div>
       {!user?.id ? (

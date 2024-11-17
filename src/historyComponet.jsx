@@ -27,13 +27,8 @@ export default function HistoryComponet({ historyItem, user }) {
   };
 
   const formatDateTime = (dateTime) => {
-    const time = new Date(dateTime);
+    const time = new Date(dateTime + "Z");
     return time.toLocaleString("zh-tw", { timeZone: "Asia/Taipei" });
-    // return `${time.getFullYear()}/${
-    //   time.getMonth() + 1
-    // }/${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${
-    //   time.getSeconds() < 10 ? "0" + time.getSeconds() : time.getSeconds()
-    // }`;
   };
 
   useEffect(() => {

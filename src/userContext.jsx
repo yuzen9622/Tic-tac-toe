@@ -7,13 +7,16 @@ export const UserContext = createContext();
 export const UserContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
+
   const [socket, setSocket] = useState(null);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(
     JSON.parse(sessionStorage.getItem("player_info"))
       ? JSON.parse(sessionStorage.getItem("player_info"))
       : null
   );
-  const [error, setError] = useState(null);
+
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -37,7 +40,7 @@ export const UserContextProvider = ({ children }) => {
 
   const logout = useCallback(() => {
     sessionStorage.removeItem("player_info");
-    socket.disconnect();
+    socket?.disconnect();
     setUser(null);
     setTimeout(() => navigate("/"), 0);
   }, [navigate, socket]);
@@ -76,6 +79,7 @@ export const UserContextProvider = ({ children }) => {
 
   const loginUser = useCallback(async () => {
     setError("");
+    setIsLoading(true);
     if (!validateEmail(loginInfo?.email)) {
       setError("請輸入合法電子郵件!");
       return false;
@@ -99,16 +103,19 @@ export const UserContextProvider = ({ children }) => {
       });
       newSocket?.emit("join", { playerName: data });
       setSocket(newSocket);
+      setIsLoading(false);
       return true;
     } else {
       setError(data?.message);
       sessionStorage.removeItem("player_info");
+      setIsLoading(false);
       return false;
     }
   }, [loginInfo, updateUserInfo]);
 
   const registerUser = useCallback(async () => {
     setError("");
+    setIsLoading(true);
     console.log(registerInfo);
     if (
       registerInfo.name === "" ||
@@ -116,10 +123,12 @@ export const UserContextProvider = ({ children }) => {
       registerInfo.password === ""
     ) {
       setError("不可為空");
+      setIsLoading(false);
       return;
     }
     if (!validateEmail(registerInfo.email)) {
       setError("電子郵件格式錯誤");
+      setIsLoading(false);
       return;
     }
 
@@ -138,11 +147,13 @@ export const UserContextProvider = ({ children }) => {
         setError(data.message);
         setRegisterInfo({ name: "", email: "", password: "" });
       }
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
       setError("伺服器錯誤");
     }
-  }, [registerInfo]);
+  }, [registerInfo, navigate]);
 
   return (
     <UserContext.Provider
@@ -158,6 +169,7 @@ export const UserContextProvider = ({ children }) => {
         error,
         socket,
         loginUser,
+        isLoading,
       }}
     >
       {children}
