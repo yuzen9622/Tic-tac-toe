@@ -11,6 +11,7 @@ export default function StartPage() {
       <div className="mode">
         <NavLink to={"/single"}>單機模式</NavLink>
         <NavLink to={"/online"}>連機模式</NavLink>
+        <NavLink to={"/AI"}>人機模式</NavLink>
       </div>
     </div>
   );

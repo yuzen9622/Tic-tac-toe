@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import "./main.css";
-
+import { AI_server_url } from "./servirce";
 const renderFrom = ["", "", "", "", "", "", "", "", ""];
 
-const Gameapp = () => {
+const AIonline = () => {
   const [chessBoard, setChessBoard] = useState(renderFrom);
   const [Xpoint, setXpoint] = useState(0);
   const [Opoint, setOpoint] = useState(0);
@@ -11,6 +11,26 @@ const Gameapp = () => {
   const [finish, setFinish] = useState(null);
   const [finishArrayState, setFinishArrayState] = useState(null);
   const [winner, setWinner] = useState(null);
+
+  const onAImove = async (board) => {
+    if (!board) return;
+    if (currentPlayer === "X") {
+      try {
+        const res = await fetch(`${AI_server_url}/play`, {
+          method: "POST",
+          body: JSON.stringify({ board: board }),
+        });
+        const data = await res.json();
+        if (data) {
+          setChessBoard(data.board);
+          setCurrentPlayer(currentPlayer === "O" ? "X" : "O");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   const onClickButton = (key) => {
     if (chessBoard[key] !== "") return;
     if (finish) return;
@@ -18,12 +38,6 @@ const Gameapp = () => {
       setChessBoard((prev) => {
         let newPrev = [...prev];
         newPrev[key] = "O";
-        return newPrev;
-      });
-    } else {
-      setChessBoard((prev) => {
-        let newPrev = [...prev];
-        newPrev[key] = "X";
         return newPrev;
       });
     }
@@ -62,7 +76,7 @@ const Gameapp = () => {
       }
     });
 
-    let isDraw = chessBoard.every((value) => value !== "");
+    let isDraw = chessBoard.every((value) => value !== "" && value !== null);
     if (isDraw && !winner.winner) {
       winner.winner = "draw";
     }
@@ -88,6 +102,8 @@ const Gameapp = () => {
         setChessBoard(renderFrom);
         setCurrentPlayer("O");
       }, 3000);
+    } else {
+      onAImove(chessBoard);
     }
   }, [chessBoard]);
 
@@ -129,11 +145,11 @@ const Gameapp = () => {
     <div className="single">
       <div className="point">
         <div className="ox">
-          <label htmlFor="">Blue:</label>
+          <label htmlFor="">You:</label>
           <input type="text" readOnly value={Opoint} />
         </div>
         <div className="ox">
-          <label htmlFor="">Red:</label>
+          <label htmlFor="">AI:</label>
           <input type="text" readOnly value={Xpoint} />
         </div>
       </div>
@@ -143,6 +159,7 @@ const Gameapp = () => {
             <button
               key={key}
               id="box"
+              disabled={currentPlayer === "O" ? false : true}
               className={`chess ${
                 finishArrayState &&
                 finishArrayState.some((item) => item === key) &&
@@ -165,15 +182,15 @@ const Gameapp = () => {
 
       <div className="name" id="state">
         {!finish && !winner && (
-          <h1>{currentPlayer === "O" ? "Blue Time" : "Red Time"}</h1>
+          <h1>{currentPlayer === "O" ? "Your Time" : "AI Time"}</h1>
         )}
         {finish && finish !== "draw" && !winner && (
-          <h1>{finish === "O" ? "O 贏了" : "X 贏了"}</h1>
+          <h1>{finish === "O" ? "你贏了" : "AI 贏了"}</h1>
         )}
         {finish && finish === "draw" && !winner && <h1>平手</h1>}
-        {winner && <h1>{winner === "O" ? "Blue Win" : "Red Win"}</h1>}
+        {winner && <h1>{winner === "O" ? "YOU Win" : "AI Win"}</h1>}
       </div>
     </div>
   );
 };
-export default Gameapp;
+export default AIonline;

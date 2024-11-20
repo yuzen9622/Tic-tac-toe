@@ -8,6 +8,7 @@ import HistoryPage from "./history";
 import Navbar from "./navbar";
 import "./App.css";
 import Register from "./register";
+import AIonline from "./AIonline";
 function App() {
   return (
     <>
@@ -19,6 +20,7 @@ function App() {
         <Route path="/history" element={<HistoryPage />} />
         <Route path="/history/:id" element={<HistoryPage />} />
         <Route path="/auth/register" element={<Register />} />
+        <Route path="/AI" element={<AIonline />} />
       </Routes>
     </>
   );
