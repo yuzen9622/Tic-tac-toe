@@ -1,6 +1,6 @@
 import { createContext, useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { server_url, handleLocationChange, url } from "./servirce";
+import { server_url, url } from "./servirce";
 import { io } from "socket.io-client";
 export const UserContext = createContext();
 
@@ -9,8 +9,14 @@ export const UserContextProvider = ({ children }) => {
   const location = useLocation();
 
   const [socket, setSocket] = useState(null);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [errorState, setErrorState] = useState({
+    login: null,
+    register: null,
+  });
+  const [isLoadingState, setIsLoadingState] = useState({
+    login: false,
+    register: false,
+  });
   const [user, setUser] = useState(
     JSON.parse(sessionStorage.getItem("player_info"))
       ? JSON.parse(sessionStorage.getItem("player_info"))
@@ -78,82 +84,95 @@ export const UserContextProvider = ({ children }) => {
   }, [location, user, socket, handleLocationChange]);
 
   const loginUser = useCallback(async () => {
-    setError("");
-    setIsLoading(true);
+    setErrorState({ ...errorState, login: null });
+    setIsLoadingState({ ...isLoadingState, login: true });
     if (!validateEmail(loginInfo?.email)) {
-      setError("請輸入合法電子郵件!");
+      setErrorState({ ...errorState, login: "請輸入合法電子郵件" });
       return false;
     }
     if (loginInfo?.password === "" || loginInfo?.email === "") {
-      setError("不可為空白");
+      setErrorState({ ...errorState, login: "不可為空白" });
       return false;
     }
-    const res = await fetch(`${server_url}/user/login`, {
-      method: "post",
-      headers: { "Content-Type": "Application/json" },
-      body: JSON.stringify(loginInfo),
-    });
-    const data = await res.json();
-    if (res.ok) {
-      sessionStorage.setItem("player_info", JSON.stringify(data));
-      updateUserInfo(data);
-
-      const newSocket = io(url, {
-        autoConnect: true,
-      });
-      newSocket?.emit("join", { playerName: data });
-      setSocket(newSocket);
-      setIsLoading(false);
-      return true;
-    } else {
-      setError(data?.message);
-      sessionStorage.removeItem("player_info");
-      setIsLoading(false);
-      return false;
-    }
-  }, [loginInfo, updateUserInfo]);
-
-  const registerUser = useCallback(async () => {
-    setError("");
-    setIsLoading(true);
-    console.log(registerInfo);
-    if (
-      registerInfo.name === "" ||
-      registerInfo.email === "" ||
-      registerInfo.password === ""
-    ) {
-      setError("不可為空");
-      setIsLoading(false);
-      return;
-    }
-    if (!validateEmail(registerInfo.email)) {
-      setError("電子郵件格式錯誤");
-      setIsLoading(false);
-      return;
-    }
-
     try {
-      const res = await fetch(`${server_url}/user/register`, {
+      const res = await fetch(`${server_url}/user/login`, {
         method: "post",
         headers: { "Content-Type": "Application/json" },
-        body: JSON.stringify(registerInfo),
+        body: JSON.stringify(loginInfo),
       });
       const data = await res.json();
       if (res.ok) {
         sessionStorage.setItem("player_info", JSON.stringify(data));
-        setUser(data);
-        navigate("/");
+        updateUserInfo(data);
+
+        const newSocket = io(url, {
+          autoConnect: true,
+        });
+        newSocket?.emit("join", { playerName: data });
+        setSocket(newSocket);
+        setIsLoadingState({ ...isLoadingState, login: false });
+        return true;
       } else {
-        setError(data.message);
-        setRegisterInfo({ name: "", email: "", password: "" });
+        setErrorState({ ...errorState, login: data?.message });
+        sessionStorage.removeItem("player_info");
+        setIsLoadingState({ ...isLoadingState, login: false });
+        return false;
       }
-      setIsLoading(false);
     } catch (error) {
-      console.log(error);
-      setIsLoading(false);
-      setError("伺服器錯誤");
+      setErrorState({ ...errorState, login: error });
+      sessionStorage.removeItem("player_info");
+      console.error(error);
+      return false;
+    } finally {
+      setIsLoadingState({ ...isLoadingState, login: false });
     }
-  }, [registerInfo, navigate]);
+  }, [loginInfo, updateUserInfo]);
+
+  const registerUser = useCallback(
+    async (e) => {
+      e?.preventDefault();
+      setErrorState({ ...errorState, register: null });
+      setIsLoadingState({ ...isLoadingState, register: true });
+      console.log(registerInfo);
+      if (
+        registerInfo.name === "" ||
+        registerInfo.email === "" ||
+        registerInfo.password === ""
+      ) {
+        setErrorState({ ...errorState, register: "不可為空" });
+        setIsLoadingState({ ...isLoadingState, register: false });
+        return;
+      }
+      if (!validateEmail(registerInfo.email)) {
+        setErrorState({ ...errorState, register: "電子郵件格式錯誤" });
+        setIsLoadingState({ ...isLoadingState, register: false });
+        return;
+      }
+
+      try {
+        const res = await fetch(`${server_url}/user/register`, {
+          method: "post",
+          headers: { "Content-Type": "Application/json" },
+          body: JSON.stringify(registerInfo),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          sessionStorage.setItem("player_info", JSON.stringify(data));
+          setUser(data);
+          navigate("/");
+        } else {
+          setErrorState({ ...errorState, register: data.message });
+          setRegisterInfo({ name: "", email: "", password: "" });
+        }
+        setIsLoadingState({ ...isLoadingState, register: false });
+      } catch (error) {
+        console.log(error);
+        setIsLoadingState({ ...isLoadingState, register: false });
+        setErrorState({ ...errorState, register: "伺服器錯誤" });
+      }
+    },
+    [registerInfo, navigate]
+  );
 
   return (
     <UserContext.Provider
@@ -166,10 +185,10 @@ export const UserContextProvider = ({ children }) => {
         updateUserInfo,
         logout,
         registerUser,
-        error,
+        errorState,
         socket,
         loginUser,
-        isLoading,
+        isLoadingState,
       }}
     >
       {children}

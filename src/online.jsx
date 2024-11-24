@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { io } from "socket.io-client";
+
 import { server_url, url, checkUser } from "./servirce";
 import { Link } from "react-router-dom";
 import { UserContext } from "./userContext";
@@ -22,8 +22,8 @@ export default function Online() {
     loginInfo,
     loginUser,
     socket,
-    error,
-    isLoading,
+    errorState,
+    isLoadingState,
   } = useContext(UserContext);
 
   const onClickButton = (e, key) => {
@@ -218,7 +218,8 @@ export default function Online() {
     popbox.style.display = "none";
   }
 
-  async function start() {
+  async function start(e) {
+    e?.preventDefault();
     try {
       if (!user?.id) {
         let isLogin = await loginUser();
@@ -240,36 +241,46 @@ export default function Online() {
   return (
     <div className="online">
       <div className="popbox">
-        <h3 style={{ fontSize: "25px", color: "white" }}>Login</h3>
+        <form
+          onSubmit={(e) => {
+            start(e);
+          }}
+        >
+          <h3 style={{ fontSize: "25px", color: "white" }}>Login</h3>
 
-        <input
-          type="email"
-          value={loginInfo.email}
-          placeholder="email"
-          onChange={(e) =>
-            updateLoginInfo({ ...loginInfo, email: e.target.value })
-          }
-        />
-        <input
-          type="password"
-          onChange={(e) =>
-            updateLoginInfo({ ...loginInfo, password: e.target.value })
-          }
-          value={loginInfo.password}
-          placeholder="password"
-        />
-        <p className="error">{error}</p>
-        <p className="comment">
-          還沒有帳號嗎?<Link to={"/auth/register"}>註冊</Link>
-        </p>
+          <input
+            type="email"
+            value={loginInfo.email}
+            placeholder="email"
+            required
+            onChange={(e) =>
+              updateLoginInfo({ ...loginInfo, email: e.target.value })
+            }
+          />
+          <input
+            type="password"
+            required
+            onChange={(e) =>
+              updateLoginInfo({ ...loginInfo, password: e.target.value })
+            }
+            value={loginInfo.password}
+            placeholder="password"
+          />
+          <p className="error">{errorState.login}</p>
+          <p className="comment">
+            還沒有帳號嗎?<Link to={"/auth/register"}>註冊</Link>
+          </p>
 
-        <div className="btn">
-          <button onClick={closePop}>取消</button>
+          <div className="btn">
+            <button type="button" onClick={closePop}>
+              取消
+            </button>
 
-          <button disabled={isLoading} onClick={start}>
-            {isLoading ? "登入中..." : "確認"}
-          </button>
-        </div>
+            <button disabled={isLoadingState.login} type="submit">
+              {isLoadingState.login ? "登入中..." : "確認"}
+            </button>
+          </div>
+        </form>
       </div>
       {!user?.id ? (
         <div style={{ position: "relative" }}>

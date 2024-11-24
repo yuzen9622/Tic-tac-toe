@@ -16,7 +16,7 @@ export default function Navbar() {
         <>
           <NavLink to={"/history"}>歷史</NavLink>
           <p>
-            <NavLink to={"/auth/setting"}> {user?.name}</NavLink>
+            <NavLink>{user?.name}</NavLink>
           </p>
           <NavLink onClick={logout}>登出</NavLink>
         </>

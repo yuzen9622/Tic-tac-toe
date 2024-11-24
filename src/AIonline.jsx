@@ -26,6 +26,11 @@ const AIonline = () => {
           setCurrentPlayer(currentPlayer === "O" ? "X" : "O");
         }
       } catch (error) {
+        if (error) {
+          alert("server error");
+          window.location.reload();
+        }
+
         console.log(error);
       }
     }

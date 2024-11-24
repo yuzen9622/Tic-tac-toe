@@ -17,4 +17,8 @@
     color: white;
     font-weight: 600;
     text-decoration: underline dotted;
+    overflow:hidden;
+white-space: nowrap;
+text-overflow: hidden;
+
 }

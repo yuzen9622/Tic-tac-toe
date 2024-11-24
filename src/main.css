@@ -147,7 +147,11 @@ h2 {
     left: 0;
   
  }
-
+.popbox form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
  .popbox input,.popbox button,.register input ,.register button{
     background: #0096ff;
     border: 2px solid transparent;
@@ -234,27 +238,26 @@ h2 {
  
   @keyframes l1 {to{opacity: 0}}
   /* HTML: <div class="loader"></div> */
-.no-Player {
-    width: fit-content;
-    font-weight: bold;
-    font-family: monospace;
-    font-size: 30px;
-    background: radial-gradient(circle closest-side,#000 100%,transparent) right/calc(200% - 1em) 100%;
-    animation: l24 1s infinite alternate linear;
+
+
  
-  }
 
-  .no-Player::before {
-    content: "No Player Yet...";
-    line-height: 1em;
-    color: #0000;
-    background: inherit;
-    background-image: radial-gradient(circle closest-side, #0096ff 94%, #000); /* 改變字的顏色為紅色 */
-    -webkit-background-clip: text;
-    background-clip: text;
+  /* HTML: <div class="loader"></div> */
+.no-Player {
+  --c:#000;
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 30px;
+  color: #0000;
+  overflow: hidden;
+  text-shadow: 0 0 var(--c),20ch 0 var(--c);
+  animation: l6 2s infinite linear; 
 }
-
-  
+.no-Player:before {
+  content:"No Player Yet..."
+}
+@keyframes l6 {to{text-shadow:-20ch 0 var(--c),0ch 0 var(--c)}}
   @keyframes l24{
     100%{background-position: left}
   }
