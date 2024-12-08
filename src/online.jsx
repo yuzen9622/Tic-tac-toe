@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-
-import { server_url, url, checkUser } from "./servirce";
+import { server_url, checkUser } from "./servirce";
 import { Link } from "react-router-dom";
 import { UserContext } from "./userContext";
 

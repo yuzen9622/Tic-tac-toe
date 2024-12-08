@@ -1,9 +1,9 @@
 //export const url = "http://localhost:5000";
 //export const server_url = "http://localhost:8080/api/v1";
-// export const AI_server_url = "http://localhost:5000";
+export const AI_server_url = "http://localhost:5000";
 export const server_url = "https://tic-tac-toe-java-server.onrender.com/api/v1";
 export const url = "https://tic-tac-toe-socket-server.onrender.com";
-export const AI_server_url = "https://ai-server-0dmx.onrender.com";
+//export const AI_server_url = "https://ai-server-0dmx.onrender.com";
 
 export const handleLocationChange = (socket) => {
   // 檢查是否切換到 online 頁面，並且確認是否已經重載過

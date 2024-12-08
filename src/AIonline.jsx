@@ -21,13 +21,24 @@ const AIonline = () => {
           body: JSON.stringify({ board: board }),
         });
         const data = await res.json();
-        if (data) {
-          setChessBoard(data.board);
-          setCurrentPlayer(currentPlayer === "O" ? "X" : "O");
+        if (data && res.ok) {
+          if (data?.position && chessBoard[data?.position] !== "O") {
+            setChessBoard((prev) => {
+              let newPrev = [...prev];
+              newPrev[data.position] = "X";
+              return newPrev;
+            });
+            setCurrentPlayer(currentPlayer === "O" ? "X" : "O");
+          } else {
+            onAImove(board);
+            return;
+          }
+        } else {
+          throw new Error("AI limit");
         }
       } catch (error) {
         if (error) {
-          alert("server error");
+          alert(error);
           window.location.reload();
         }
 
