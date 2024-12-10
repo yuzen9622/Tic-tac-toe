@@ -56,7 +56,7 @@ export default function Online() {
   const connectPlayer = async (socketId) => {
     if (!(await checkUser())) return;
 
-    socket?.emit("findPlayer", socketId);
+    socket?.emit("findPlayer", { userId: user.id, socketId });
   };
 
   const checkWinner = () => {
@@ -166,7 +166,7 @@ export default function Online() {
     if (winner.winner) {
       setWinStateArray(winner.winnerArray);
       setFinish(winner.winner);
-      socket.emit("finish", winner);
+      socket.emit("finish", { userId: user.id, recipientPlayer, winner });
       const history = {
         member1: player?.id,
         member2: recipientPlayer?.id,
