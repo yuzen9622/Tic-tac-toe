@@ -5,18 +5,6 @@ export const server_url = "https://tic-tac-toe-java-server.onrender.com/api/v1";
 export const url = "https://tic-tac-toe-socket-server.onrender.com";
 export const AI_server_url = "https://ai-server-0dmx.onrender.com";
 
-export const handleLocationChange = (socket) => {
-  // 檢查是否切換到 online 頁面，並且確認是否已經重載過
-  if (
-    sessionStorage.getItem("hasReloaded") === "false" &&
-    window.location.hash !== "#/online"
-  ) {
-    console.log(window.location.hash);
-    sessionStorage.setItem("hasReloaded", "true"); // 設置已重載標記
-    socket?.disconnect();
-  }
-};
-
 export const checkUser = async () => {
   const user_info = JSON.parse(sessionStorage.getItem("player_info"));
   if (!user_info) return true;

@@ -13,8 +13,8 @@ export default function Online() {
   const [PlayAs, setPlayAs] = useState("");
   const [finish, setFinish] = useState(null);
   const [winStatArray, setWinStateArray] = useState([]);
-  // const [socket, setSocket] = useState(null);
   const [allUsers, setAllUsers] = useState(null);
+
   const {
     user,
     updateLoginInfo,
