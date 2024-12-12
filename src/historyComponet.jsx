@@ -26,10 +26,19 @@ export default function HistoryComponet({ historyItem, user }) {
     }
   };
 
-  const formatDateTime = (dateTime) => {
-    const time = new Date(dateTime + "Z");
-    return time.toLocaleString("zh-tw", { timeZone: "Asia/Taipei" });
-  };
+  function formatDateTime(utcTime) {
+    const date = new Date(utcTime);
+    date.setHours(date.getHours() + 8);
+
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const seconds = date.getSeconds().toString().padStart(2, "0");
+
+    return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+  }
 
   useEffect(() => {
     fetchUser();

@@ -37,10 +37,13 @@ export default function HistoryPage() {
       <h1>歷史紀錄</h1>
       {user ? (
         <div className="history-container">
-          {history &&
+          {history ? (
             history.map((item, key) => (
               <HistoryComponet key={key} historyItem={item} user={user} />
-            ))}
+            ))
+          ) : (
+            <div className="history-loading"></div>
+          )}
         </div>
       ) : (
         <div>

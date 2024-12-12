@@ -21,6 +21,7 @@
     align-items: center;
 
     width: 75%;
+    height: 100%;
  max-height: 90%;
  overflow-y: auto;
 
@@ -52,3 +53,13 @@
     font-weight: 600;
  
 }
+
+.history-loading {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid lightblue;
+  border-right-color: white;
+  animation: l2 1s infinite linear;
+}
+@keyframes l2 {to{transform: rotate(1turn)}}
