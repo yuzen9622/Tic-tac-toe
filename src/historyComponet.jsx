@@ -36,62 +36,65 @@ export default function HistoryComponet({ historyItem, user }) {
   }, []);
 
   return (
-    <div className="historyCom">
-      <div className="history-players">
-        <p
-          style={{
-            fontWeight: 600,
-            fontSize: "1.5em",
-            ...(historyItem?.winner[1] !== "draw" &&
-            parseInt(historyItem?.winner[0]) === user?.id
-              ? { color: "#99cfff  " }
-              : { color: "#e3242b" }),
-            ...(historyItem?.winner[1] === "draw" && { color: "#333" }),
-          }}
-        >
-          {historyItem?.winner[1] === "draw" && "平手"}
-          {historyItem?.winner[1] !== "draw" &&
-            parseInt(historyItem?.winner[0]) === user?.id &&
-            "勝利"}
-          {historyItem?.winner[1] !== "draw" &&
-            parseInt(historyItem?.winner[0]) !== user?.id &&
-            "失敗"}
-        </p>
-        <p className="recipientPlayer"> {recipientPlayer?.name}</p>
-        {historyItem?.winner[1] !== "draw" && (
-          <div className="winner">
-            {parseInt(historyItem?.winner[0]) === recipientPlayer?.id
-              ? "贏家:" + recipientPlayer?.name
-              : "贏家:你"}
-            {historyItem?.winner[1] !== "draw" && historyItem?.winner[1] === "O"
-              ? " 狀態:O"
-              : " 狀態:X"}
+    recipientPlayer && (
+      <div className="historyCom">
+        <div className="history-players">
+          <p
+            style={{
+              fontWeight: 600,
+              fontSize: "1.5em",
+              ...(historyItem?.winner[1] !== "draw" &&
+              parseInt(historyItem?.winner[0]) === user?.id
+                ? { color: "#99cfff  " }
+                : { color: "#e3242b" }),
+              ...(historyItem?.winner[1] === "draw" && { color: "#333" }),
+            }}
+          >
+            {historyItem?.winner[1] === "draw" && "平手"}
+            {historyItem?.winner[1] !== "draw" &&
+              parseInt(historyItem?.winner[0]) === user?.id &&
+              "勝利"}
+            {historyItem?.winner[1] !== "draw" &&
+              parseInt(historyItem?.winner[0]) !== user?.id &&
+              "失敗"}
+          </p>
+          <p className="recipientPlayer"> {recipientPlayer?.name}</p>
+          {historyItem?.winner[1] !== "draw" && (
+            <div className="winner">
+              {parseInt(historyItem?.winner[0]) === recipientPlayer?.id
+                ? "贏家:" + recipientPlayer?.name
+                : "贏家:你"}
+              {historyItem?.winner[1] !== "draw" &&
+              historyItem?.winner[1] === "O"
+                ? " 狀態:O"
+                : " 狀態:X"}
+            </div>
+          )}
+          <div className="time">{formatDateTime(historyItem?.date)}</div>
+        </div>
+        <div className="history-state">
+          <div className="state game">
+            {checkBoard.map((chess, key) => (
+              <button
+                key={key}
+                className={`chess ${
+                  winStateArray?.some((item) => parseInt(item) === key) &&
+                  historyItem?.winner[1] !== "draw" &&
+                  parseInt(historyItem?.winner[0]) === user?.id &&
+                  "winInputO"
+                } ${
+                  winStateArray?.some((item) => parseInt(item) === key) &&
+                  historyItem?.winner[1] !== "draw" &&
+                  parseInt(historyItem?.winner[0]) !== user?.id &&
+                  "winInputX"
+                } `}
+              >
+                {chess}
+              </button>
+            ))}
           </div>
-        )}
-        <div className="time">{formatDateTime(historyItem?.date)}</div>
-      </div>
-      <div className="history-state">
-        <div className="state game">
-          {checkBoard.map((chess, key) => (
-            <button
-              key={key}
-              className={`chess ${
-                winStateArray?.some((item) => parseInt(item) === key) &&
-                historyItem?.winner[1] !== "draw" &&
-                parseInt(historyItem?.winner[0]) === user?.id &&
-                "winInputO"
-              } ${
-                winStateArray?.some((item) => parseInt(item) === key) &&
-                historyItem?.winner[1] !== "draw" &&
-                parseInt(historyItem?.winner[0]) !== user?.id &&
-                "winInputX"
-              } `}
-            >
-              {chess}
-            </button>
-          ))}
         </div>
       </div>
-    </div>
+    )
   );
 }

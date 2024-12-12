@@ -4,7 +4,7 @@ import "./history.css";
 import HistoryComponet from "./historyComponet";
 import { server_url } from "./servirce";
 import { Link } from "react-router-dom";
-import { handleLocationChange } from "./servirce";
+
 import { UserContext } from "./userContext";
 export default function HistoryPage() {
   const { user } = useContext(UserContext);
