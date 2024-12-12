@@ -60,8 +60,8 @@ export const UserContextProvider = ({ children }) => {
   };
   const handleLocationChange = useCallback(
     (socket) => {
-      // 檢查是否切換到 online 頁面，並且確認是否已經重載過
       if (window.location.hash !== "#/online") {
+        // 檢查是否切換到 online 頁面，並且確認是否已經重載過
         console.log(window.location.hash);
 
         socket?.disconnect();
@@ -79,7 +79,12 @@ export const UserContextProvider = ({ children }) => {
     if (user) {
       handleLocationChange(socket);
     }
-
+    if (
+      document.body.style.backgroundColor !== "rgba(19, 56, 190, 0.8)" &&
+      location.pathname !== "/single"
+    ) {
+      document.body.style.backgroundColor = "";
+    }
     console.log(location.pathname);
   }, [location, user, socket, handleLocationChange]);
 
