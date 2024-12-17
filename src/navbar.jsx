@@ -11,6 +11,7 @@ export default function Navbar() {
       <NavLink to={"/online"}>線上</NavLink>
       <NavLink to={"/single"}>單機</NavLink>
       <NavLink to={"/AI"}>人機</NavLink>
+      <NavLink to={"/record"}>排行榜</NavLink>
 
       {user ? (
         <>

@@ -1,0 +1,52 @@
+
+.record {
+    width: 60%;  
+    margin: 20px auto;
+    border-collapse: collapse; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  
+  
+}
+
+ 
+th {
+    background-color: rgba(227, 36, 43, 0.8);  
+    color: white;  
+    padding: 12px;  
+    font-size: 1.1em;  
+    text-transform: uppercase;  
+}
+
+
+td {
+    border: 1px solid #ddd; 
+    text-align: center;
+    padding: 10px;
+    color: #1E3A8A;
+    font-size: 18px;
+    font-weight: 600;
+   
+}
+tr{
+    background-color: white;
+}
+
+.record tr:hover {
+    background-color: #FEE2E2; 
+    transition: background-color 0.3s ease;
+}
+.onrecord{
+    background-color:#fef9c3 ;
+    
+
+}
+.onrecord td{
+    color: #b45309; 
+  font-size: 1.2em;
+}
+
+caption {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: white; 
+    font-weight: bold;
+}

@@ -9,6 +9,7 @@ import Navbar from "./navbar";
 import "./App.css";
 import Register from "./register";
 import AIonline from "./AIonline";
+import Record from "./record";
 function App() {
   return (
     <>
@@ -18,9 +19,10 @@ function App() {
         <Route path="/single" element={<Gameapp />} />
         <Route path="/online" element={<Online />} />
         <Route path="/history" element={<HistoryPage />} />
-        <Route path="/history/:id" element={<HistoryPage />} />
+        <Route path="/history/:index" element={<HistoryPage />} />
         <Route path="/auth/register" element={<Register />} />
         <Route path="/AI" element={<AIonline />} />
+        <Route path="/record" element={<Record />} />
       </Routes>
     </>
   );

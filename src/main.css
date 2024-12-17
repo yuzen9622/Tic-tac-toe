@@ -8,8 +8,8 @@ body {
     justify-content: center;
     align-items: center;
     width: 100vw;
-    height: 90vh;
-  
+    height: 100vh;
+  box-sizing: border-box;
     background-color: rgb(19, 56, 190, 0.8);
 }
 
@@ -21,7 +21,7 @@ body {
 
 }
 .single,.online{
-height: 90vh;
+height: 95%;
     display: flex;
     flex-direction: column;
     justify-content: center;

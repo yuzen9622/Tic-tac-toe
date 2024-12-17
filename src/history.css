@@ -1,11 +1,38 @@
 
 
 .history{
-    width: 100vw;
-    height: 90vh;
+    position: relative;
+    width: 100%;
+  height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: white;
+    
+    
+  
+
+}
+.history-container{
+
+    width: 80%;  
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none;
+    overflow: hidden;
+   
+ 
+}
+.history-container tbody{
+    width: 100%;
+    height:100%;
+
+    overflow-y: auto;
+    border-collapse: collapse;
+   
 }
 .history-players{
     display: flex;
@@ -15,26 +42,43 @@
     font-size: 20px;
 }
 
-.history-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 
-    width: 75%;
-    height: 100%;
- max-height: 90%;
- overflow-y: auto;
-
- 
-}
 .historyCom{
-    width: 90%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
     text-align: center;
-      margin: 10px;
-      padding: 10px;
-  
-    border: 2px solid white;
-    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, .6) ;
+}
+
+.history-main{
+    position: relative;
+    background-color: #1338be;
+    width: 50%;
+    height: 60%;
+    padding: 20px;
+    overflow-y: auto;
+}
+.history-main a{
+    position: absolute;
+    right: 20px;
+    display: block;
+width: 30px;
+height: 30px;
+    font-size: 20px;
+    color: white;
+    padding: 5px;
+   border-radius: 50%;
+   float: right;
+   transition: all .3s;
+}
+.history-main a:hover{
+    
+    background-color: #3333337e;
 }
 .winner{
     font-weight: 600;
@@ -54,8 +98,35 @@
  
 }
 
+.history-container tr{
+    display: flex;
+    justify-content: space-around;
+
+
+}
+.history_tr td{
+    cursor: pointer;
+    border: none;
+
+}
+.win{
+    background-color: #84cdf2;
+}
+.win:hover,.win.active{
+    background-color: #63abcf;
+}
+.lose{
+    background-color: #ffd299 ;
+ 
+}
+.lose:hover,.lose.active{
+    background-color:#c18a66 ;
+}
+.lose td{
+    color: #c21d03;
+}
 .history-loading {
-  width: 50px;
+ width: 50px;
   aspect-ratio: 1;
   border-radius: 50%;
   border: 8px solid lightblue;

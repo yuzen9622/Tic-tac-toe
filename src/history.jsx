@@ -1,15 +1,30 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import "./history.css";
-import HistoryComponet from "./historyComponet";
+import "./record.css";
+import HistoryTr from "./historyTr";
 import { server_url } from "./servirce";
-import { Link } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
 import { UserContext } from "./userContext";
+import HistoryComponet from "./historyComponent";
 export default function HistoryPage() {
   const { user } = useContext(UserContext);
   const [history, setHistory] = useState(null);
-  const fetchHistory = async () => {
+  const [queryHistory, setQueryHistory] = useState(null);
+  const { index } = useParams();
+
+  useEffect(() => {
+    if (!history) return;
+    let findHistory = history[index];
+
+    console.log(findHistory);
+    if (findHistory !== void 0) {
+      setQueryHistory(findHistory);
+    } else {
+      setQueryHistory(null);
+    }
+  }, [index, history]);
+  const fetchUserHistory = async () => {
     try {
       const res = await fetch(
         `${server_url}/history/userHistory?userId=${user?.id}`,
@@ -29,30 +44,31 @@ export default function HistoryPage() {
   };
 
   useEffect(() => {
-    fetchHistory();
+    fetchUserHistory();
   }, [user]);
 
   return (
-    <div className="history">
-      <h1>歷史紀錄</h1>
-      {user ? (
-        <div className="history-container">
-          {history ? (
-            history.map((item, key) => (
-              <HistoryComponet key={key} historyItem={item} user={user} />
-            ))
-          ) : (
-            <div className="history-loading"></div>
-          )}
-        </div>
-      ) : (
-        <div>
-          <h1>
-            {" "}
-            <Link to={"/online"}>請先登入</Link>{" "}
-          </h1>
-        </div>
+    <>
+      <div className="history">
+        <table className="history-container">
+          <caption>歷史紀錄</caption>
+          {!history && <div className="history-loading"></div>}
+          <tbody>
+            {history &&
+              history.map((item, key) => (
+                <HistoryTr
+                  historyItem={item}
+                  number={key}
+                  key={key}
+                  isactive={parseInt(index) === key}
+                />
+              ))}
+          </tbody>
+        </table>
+      </div>
+      {queryHistory && (
+        <HistoryComponet historyItem={queryHistory} user={user} />
       )}
-    </div>
+    </>
   );
 }
