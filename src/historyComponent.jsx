@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./history.css";
 import { server_url } from "./servirce";
-export default function HistoryComponet({ historyItem, user }) {
+import { UserContext } from "./userContext";
+export default function HistoryComponet({ historyItem }) {
+  const { user } = useContext(UserContext);
   const [recipientPlayer, setRecipientPlayer] = useState(null);
   const [winStateArray, setWinStateArray] = useState(historyItem?.winStatus);
   const [checkBoard, setCheckBoard] = useState(historyItem?.gameStatus);

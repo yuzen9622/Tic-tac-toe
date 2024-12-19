@@ -109,6 +109,9 @@ height: 30px;
     border: none;
 
 }
+.history_tr:hover{
+    background-color: #d2d2d2;
+}
 .win{
     background-color: #84cdf2;
 }
