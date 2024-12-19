@@ -14,6 +14,7 @@ export default function Online() {
   const [finish, setFinish] = useState(null);
   const [winStatArray, setWinStateArray] = useState([]);
   const [allUsers, setAllUsers] = useState(null);
+  const [disconnect, setDisconnect] = useState(false);
 
   const {
     user,
@@ -149,6 +150,18 @@ export default function Online() {
       setWinStateArray([]);
     }, 3000);
   });
+  socket?.on("oppentDisconnect", (data) => {
+    console.log("disconnect");
+    setDisconnect(true);
+    setRecipientPlayer(null);
+    setFinish(false);
+    setCheckBoard(renderFrom);
+    setWinStateArray([]);
+    setCurrentPlayer("O");
+    setTimeout(() => {
+      setDisconnect(false);
+    }, 3000);
+  });
 
   useEffect(() => {
     sessionStorage.setItem("hasReloaded", "false");
@@ -239,6 +252,14 @@ export default function Online() {
 
   return (
     <div className="online">
+      {
+        <div
+          className="disconnect-popbox"
+          style={{ opacity: disconnect ? 1 : 0 }}
+        >
+          對方已離線
+        </div>
+      }
       <div className="popbox">
         <form
           onSubmit={(e) => {

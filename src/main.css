@@ -132,6 +132,24 @@ h2 {
     color: #ffffff !important;
     border:3px solid #fff !important;
  }
+.disconnect-popbox{
+    z-index: 100;
+    position: absolute;
+    background-color: #e97451;
+    display: block;
+    opacity: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    bottom: 20%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    transition: all .3s;
+  
+ }
 
  .popbox{
     z-index: 100;
