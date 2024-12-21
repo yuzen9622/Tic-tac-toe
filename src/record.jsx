@@ -16,7 +16,9 @@ export default function Record() {
       if (isPlayer) {
         isPlayer.count += 1;
       } else {
-        winCount.push({ id: winner, count: 1 });
+        if (winner) {
+          winCount.push({ id: winner, count: 1 });
+        }
       }
     });
     winCount.sort((a, b) => b.count - a.count);
