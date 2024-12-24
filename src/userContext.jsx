@@ -2,12 +2,32 @@ import { createContext, useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { server_url, url } from "./servirce";
 import { io } from "socket.io-client";
+/**
+ * 用戶上下文，用於管理整個應用中的用戶資料和登錄註冊狀態。
+ * 提供註冊、登入、登出等功能，並提供用戶資料的共享。
+ *
+ * @context UserContext
+ *
+ */
 export const UserContext = createContext();
 
+/**
+ * UserContext 的提供者組件，用於提供用戶相關的狀態和功能給子組件。
+ *  @params {Object} children
+ * @returns {React.JSX.Element} UserContextProvider
+ */
 export const UserContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  /**
+   * 狀態變數
+   * @type {[Object | Function]} socket 用於管理 socket.io 的 socket
+   * @type {[Object | Function]} errorState 錯誤訊息狀態
+   * @type {[Boolean | Function]} isLoadingState 載入狀態
+   * @type {[Object | Function]} user 當前使用者資料
+   * @type {[Object | Function]} loginInfo 登入資訊
+   * @type {[Object | Function]} registerInfo 註冊資訊
+   */
   const [socket, setSocket] = useState(null);
   const [errorState, setErrorState] = useState({
     login: null,
@@ -33,17 +53,34 @@ export const UserContextProvider = ({ children }) => {
     password: "",
   });
 
+  /**
+   * 更新登入資訊
+   * @param {Object} info 登入資訊
+   */
   const updateLoginInfo = useCallback((info) => {
     setLoginInfo(info);
   }, []);
+
+  /**
+   * 更新註冊資訊
+   * @param {Object} info 註冊資訊
+   */
   const updateRegisterInfo = useCallback((info) => {
     setRegisterInfo(info);
   }, []);
 
+  /**
+   * 更新使用者資訊
+   * @param {Object} info 使用者資訊
+   */
   const updateUserInfo = useCallback((info) => {
     setUser(info);
   }, []);
 
+  /**
+   * 登出函式，清除 sessionStorage 中的用戶資訊，並斷開 socket 連接。
+   * 並將用戶設置為 null，然後跳轉到首頁。
+   */
   const logout = useCallback(() => {
     sessionStorage.removeItem("player_info");
     socket?.disconnect();
@@ -51,6 +88,11 @@ export const UserContextProvider = ({ children }) => {
     setTimeout(() => navigate("/"), 0);
   }, [navigate, socket]);
 
+  /**
+   *
+   * @param {String} email
+   * @returns {String} vaildEmail
+   */
   const validateEmail = (email) => {
     return String(email)
       .toLowerCase()
@@ -58,6 +100,10 @@ export const UserContextProvider = ({ children }) => {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
   };
+  /**
+   * 處理路由變化，當路由變化時，檢查是否切換到 online 頁面，並且確認是否已經重載過。
+   * @param {Object} socket socket.io 的 socket
+   */
   const handleLocationChange = useCallback(
     (socket) => {
       if (window.location.hash !== "#/online") {
@@ -75,6 +121,11 @@ export const UserContextProvider = ({ children }) => {
     },
     [socket, user]
   );
+
+  /**
+   * 當 location 變化時，檢查是否切換到 online 頁面，並且確認是否已經重載過。
+   * 當 user 變化時，檢查是否有使用者登入，並且加入 socket.io 的房間。
+   */
   useEffect(() => {
     if (user) {
       handleLocationChange(socket);
@@ -88,6 +139,12 @@ export const UserContextProvider = ({ children }) => {
     console.log(location.pathname);
   }, [location, user, socket, handleLocationChange]);
 
+  /**
+   * 登入函式，用於處理登入請求，並將登入資訊發送到伺服器進行驗證。
+   * 驗證成功後，將用戶資訊存儲到 sessionStorage 中，並更新用戶資訊。
+   * @returns {Boolean} 是否登入成功
+   * @type {Promise<Boolean>} 登入是否成功
+   */
   const loginUser = useCallback(async () => {
     setErrorState({ ...errorState, login: null });
     setIsLoadingState({ ...isLoadingState, login: true });
@@ -133,6 +190,11 @@ export const UserContextProvider = ({ children }) => {
     }
   }, [loginInfo, updateUserInfo]);
 
+  /**
+   * 註冊函式，用於處理註冊請求，並將註冊資訊發送到伺服器進行驗證。
+   * @param {Object} e
+   * @returns {Promise<void>}
+   */
   const registerUser = useCallback(
     async (e) => {
       e?.preventDefault();

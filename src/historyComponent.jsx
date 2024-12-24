@@ -3,11 +3,29 @@ import { NavLink } from "react-router-dom";
 import "./history.css";
 import { server_url } from "./servirce";
 import { UserContext } from "./userContext";
+
+/**
+ * 單次單次歷史紀錄
+ * @returns {React.JSX.Element} HistoryComponet
+ */
 export default function HistoryComponet({ historyItem }) {
+  /**
+   * 設定當前使用者資訊，並初始化歷史紀錄相關的 state。
+   * @type {Object} user 使用者資訊，來自 UserContext
+   * @type {[Object | null, Function]} recipientPlayer 對手玩家資料
+   * @type {[Array | null, Function]} winStateArray 勝利狀態陣列
+   * @type {[Array | null, Function]} checkBoard 棋盤狀態
+   */
   const { user } = useContext(UserContext);
   const [recipientPlayer, setRecipientPlayer] = useState(null);
   const [winStateArray, setWinStateArray] = useState(historyItem?.winStatus);
   const [checkBoard, setCheckBoard] = useState(historyItem?.gameStatus);
+  /**
+   * 透過對手的 ID 來獲取對手資料
+   * 根據當前使用者的 ID，決定對手是 `member1` 還是 `member2`，並發送請求來獲取對手資料
+   * 設定 `recipientPlayer` state 為對手資料
+   * @returns {Promise<void>}
+   */
   const fetchUser = async () => {
     setRecipientPlayer(null);
     try {
@@ -29,6 +47,11 @@ export default function HistoryComponet({ historyItem }) {
     }
   };
 
+  /**
+   * 將 UTC 時間格式化為台灣時間 (UTC +8)，並轉換為易讀格式
+   * @param {string} utcTime UTC 時間字串
+   * @returns {string} 格式化後的日期時間字串，格式為 YYYY/MM/DD HH:MM:SS
+   */
   function formatDateTime(utcTime) {
     const date = new Date(utcTime);
     date.setHours(date.getHours() + 8);
@@ -42,7 +65,10 @@ export default function HistoryComponet({ historyItem }) {
 
     return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
   }
-
+  /**
+   * `useEffect` 監聽 `historyItem` 和 `user` 變化，觸發 `fetchUser` 函式來獲取對手資料，
+   * 並設置棋盤和勝利狀態。
+   */
   useEffect(() => {
     fetchUser();
     setWinStateArray(historyItem?.winStatus);

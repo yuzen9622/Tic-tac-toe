@@ -1,6 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { server_url } from "./servirce";
 import { UserContext } from "./userContext";
+
+/**
+ *  排行榜紀錄列
+ * @returns {React.JSX.Element} RecordComponent
+ */
 export default function RecordComponent({ item, number }) {
   const { user } = useContext(UserContext);
 
@@ -26,7 +31,6 @@ export default function RecordComponent({ item, number }) {
     };
     fetchRecipientUser(item.id);
   }, []);
-  console.log(recipientUser);
   return (
     <>
       {recipientUser && (

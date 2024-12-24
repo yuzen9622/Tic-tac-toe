@@ -3,7 +3,21 @@ import "./main.css";
 
 const renderFrom = ["", "", "", "", "", "", "", "", ""];
 
+/**
+ * 單人遊戲
+ * @returns {React.JSX.Element} Gameapp
+ */
 const Gameapp = () => {
+  /**
+   * 狀態變數
+   * @type {Array} chessBoard 棋盤狀態，每個格子保存 "O"、"X" 或空字串。
+   * @type {number} Xpoint X 玩家得分。
+   * @type {number} Opoint O 玩家得分。
+   * @type {string} currentPlayer 當前玩家的標記，"O" 或 "X"。
+   * @type {string|null} finish 遊戲結束狀態，"O"、"X" 或 null。
+   * @type {Array|null} finishArrayState 勝利的棋盤格組合。
+   * @type {string|null} winner 優勝者，"O"、"X" 或 "draw"。
+   */
   const [chessBoard, setChessBoard] = useState(renderFrom);
   const [Xpoint, setXpoint] = useState(0);
   const [Opoint, setOpoint] = useState(0);
@@ -11,6 +25,11 @@ const Gameapp = () => {
   const [finish, setFinish] = useState(null);
   const [finishArrayState, setFinishArrayState] = useState(null);
   const [winner, setWinner] = useState(null);
+  /**
+   * 處理玩家點擊棋盤上的按鈕，更新棋盤並切換玩家。
+   *
+   * @param {number} key 被點擊的棋盤格子索引。
+   */
   const onClickButton = (key) => {
     if (chessBoard[key] !== "") return;
     if (finish) return;
@@ -30,6 +49,13 @@ const Gameapp = () => {
     setCurrentPlayer(currentPlayer === "O" ? "X" : "O");
   };
 
+  /**
+   * 檢查遊戲是否有獲勝者或平手。
+   *
+   * @returns {Object} 包含獲勝者及獲勝的格子組合。
+   * @returns {string|null} winner "O"、"X" 或 "draw"。
+   * @returns {Array} winnerArray 獲勝的格子索引組合。
+   */
   const checkWinner = () => {
     let winner = { winner: null, winnerArray: [] };
     const winningCombinations = [
@@ -70,6 +96,9 @@ const Gameapp = () => {
     return winner;
   };
 
+  /**
+   * 在棋盤狀態改變時，檢查是否有勝利。
+   */
   useEffect(() => {
     const { winner, winnerArray } = checkWinner();
 
@@ -91,6 +120,9 @@ const Gameapp = () => {
     }
   }, [chessBoard]);
 
+  /**
+   * 在得分變化時檢查是否有玩家贏得比賽，並重置得分。
+   */
   useEffect(() => {
     if (Xpoint === 2) {
       setWinner("X");
@@ -109,6 +141,9 @@ const Gameapp = () => {
     }
   }, [Xpoint, Opoint]);
 
+  /**
+   * 根據當前玩家或遊戲結束狀態改變背景顏色和文字顏色。
+   */
   useEffect(() => {
     let body = document.body;
     let stateEl = document.querySelector("#state");

@@ -1,5 +1,3 @@
-import logo from "./logo.svg";
-
 import Gameapp from "./main";
 import { Routes, Route } from "react-router-dom";
 import StartPage from "./start";
@@ -10,10 +8,13 @@ import "./App.css";
 import Register from "./register";
 import AIonline from "./AIonline";
 import Record from "./record";
+
 function App() {
   return (
     <>
+      {/* 導覽列組件 */}
       <Navbar />
+      {/* 定義應用的路由配置 */}
       <Routes>
         <Route path="/" element={<StartPage />} />
         <Route path="/single" element={<Gameapp />} />

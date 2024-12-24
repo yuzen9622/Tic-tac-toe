@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./navbar.css";
 import { UserContext } from "./userContext";

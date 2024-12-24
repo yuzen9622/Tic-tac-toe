@@ -2,8 +2,21 @@ import { useEffect, useState } from "react";
 import "./main.css";
 import { AI_server_url } from "./servirce";
 const renderFrom = ["", "", "", "", "", "", "", "", ""];
-
+/**
+ *  線上對戰
+ * @returns {React.JSX.Element} AIonline
+ */
 const AIonline = () => {
+  /**
+   * 狀態變數：
+   * @type {[Array, Function]} chessBoard - 棋盤狀態，初始值為 renderFrom (空棋盤)。
+   * @type {[Number, Function]} Xpoint - 玩家 X 的分數，初始值為 0。
+   * @type {[Number, Function]} Opoint - 玩家 O 的分數，初始值為 0。
+   * @type {[String, Function]} currentPlayer - 當前玩家，初始值為 "O"，代表玩家 O 先開始。
+   * @type {[String | null, Function]} finish - 遊戲結束狀態，初始值為 null，表示遊戲尚未結束；可能值為 "X"、"O" 或 "draw"。
+   * @type {[Array | null, Function]} finishArrayState - 獲勝的棋盤組合，初始值為 null；獲勝時為棋格索引陣列，例如 [0, 1, 2]。
+   * @type {[String | null, Function]} winner - 總勝利玩家，初始值為 null，表示遊戲尚未有最終贏家；可能值為 "X" 或 "O"。
+   */
   const [chessBoard, setChessBoard] = useState(renderFrom);
   const [Xpoint, setXpoint] = useState(0);
   const [Opoint, setOpoint] = useState(0);
@@ -12,6 +25,11 @@ const AIonline = () => {
   const [finishArrayState, setFinishArrayState] = useState(null);
   const [winner, setWinner] = useState(null);
 
+  /**
+   * AI 執行下一步棋
+   * @param {string[]} board - 當前棋盤狀態
+   * @returns {Promise<void>}
+   */
   const onAImove = async (board) => {
     if (!board) return;
     if (currentPlayer === "X") {
@@ -22,7 +40,7 @@ const AIonline = () => {
         });
         const data = await res.json();
         if (data && res.ok) {
-          if (data?.position && chessBoard[data?.position] == "") {
+          if (data?.position && chessBoard[data?.position] === "") {
             setChessBoard((prev) => {
               let newPrev = [...prev];
               newPrev[data.position] = "X";
@@ -47,6 +65,10 @@ const AIonline = () => {
     }
   };
 
+  /**
+   * 玩家點擊棋盤按鈕的事件
+   * @param {number} key - 棋盤的按鈕索引
+   */
   const onClickButton = (key) => {
     if (chessBoard[key] !== "") return;
     if (finish) return;
@@ -59,7 +81,10 @@ const AIonline = () => {
     }
     setCurrentPlayer(currentPlayer === "O" ? "X" : "O");
   };
-
+  /**
+   * 檢查棋局是否有贏家或平局
+   * @returns {{winner: string | null, winnerArray: number[]}} 贏家和獲勝組合
+   */
   const checkWinner = () => {
     let winner = { winner: null, winnerArray: [] };
     const winningCombinations = [
@@ -99,7 +124,7 @@ const AIonline = () => {
 
     return winner;
   };
-
+  // 檢測棋盤狀態變化，更新遊戲邏輯
   useEffect(() => {
     const { winner, winnerArray } = checkWinner();
 
@@ -122,7 +147,7 @@ const AIonline = () => {
       onAImove(chessBoard);
     }
   }, [chessBoard]);
-
+  // 檢查是否達到獲勝條件
   useEffect(() => {
     if (Xpoint === 2) {
       setWinner("X");
@@ -140,7 +165,7 @@ const AIonline = () => {
       }, 3000);
     }
   }, [Xpoint, Opoint]);
-
+  // 動態更新頁面樣式
   useEffect(() => {
     let body = document.body;
     let stateEl = document.querySelector("#state");
