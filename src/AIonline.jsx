@@ -43,7 +43,7 @@ const AIonline = () => {
           if (data?.position && chessBoard[data?.position] === "") {
             setChessBoard((prev) => {
               let newPrev = [...prev];
-              newPrev[data.position-1] = "X";
+              newPrev[data.position] = "X";
               return newPrev;
             });
             setCurrentPlayer(currentPlayer === "O" ? "X" : "O");
