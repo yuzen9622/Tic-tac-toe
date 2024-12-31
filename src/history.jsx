@@ -4,7 +4,7 @@ import "./history.css";
 import "./record.css";
 import HistoryTr from "./historyTr";
 import { server_url } from "./servirce";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "./userContext";
 import HistoryComponet from "./historyComponent";
 
@@ -24,10 +24,12 @@ export default function HistoryPage() {
   const [history, setHistory] = useState(null);
   const [queryHistory, setQueryHistory] = useState(null);
   const { index } = useParams();
+  const navigate = useNavigate();
   /**
    * 依據索引更新當前的歷史紀錄資料
    */
   useEffect(() => {
+    if (!user?.id) navigate("/");
     if (!history) return;
     let findHistory = history[index];
 

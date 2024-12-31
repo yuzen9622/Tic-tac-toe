@@ -1,0 +1,40 @@
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: white;
+
+    padding: 10px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(92, 125, 243);
+    box-shadow: 3px 3px 5px rgba(255, 255, 255, 0.577);
+}
+
+.profile h3 {
+    font-size: 40px;
+}
+
+.info p {
+    font-size: 20px;
+    margin: 10px;
+}
+
+.info button {
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid white;
+    background-color: white;
+    padding: 10px;
+    font-weight: 600;
+    color: rgb(92, 125, 243);
+}

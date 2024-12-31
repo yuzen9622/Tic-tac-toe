@@ -103,6 +103,8 @@ export const UserContextProvider = ({ children }) => {
   /**
    * 處理路由變化，當路由變化時，檢查是否切換到 online 頁面，並且確認是否已經重載過。
    * @param {Object} socket socket.io 的 socket
+   * @returns {void}
+   * @type {Function} handleLocationChange
    */
   const handleLocationChange = useCallback(
     (socket) => {
@@ -144,6 +146,7 @@ export const UserContextProvider = ({ children }) => {
    * 驗證成功後，將用戶資訊存儲到 sessionStorage 中，並更新用戶資訊。
    * @returns {Boolean} 是否登入成功
    * @type {Promise<Boolean>} 登入是否成功
+   * @type {Function} loginUser
    */
   const loginUser = useCallback(async () => {
     setErrorState({ ...errorState, login: null });
@@ -172,16 +175,16 @@ export const UserContextProvider = ({ children }) => {
         });
         newSocket?.emit("join", { playerName: data });
         setSocket(newSocket);
-        setIsLoadingState({ ...isLoadingState, login: false });
+        setIsLoadingState({ ...isLoadingState, login: data.message });
         return true;
       } else {
-        setErrorState({ ...errorState, login: data?.message });
+        setErrorState({ ...errorState, login: "登入失敗" });
         sessionStorage.removeItem("player_info");
         setIsLoadingState({ ...isLoadingState, login: false });
         return false;
       }
     } catch (error) {
-      setErrorState({ ...errorState, login: error });
+      setErrorState({ ...errorState, login: "伺服器問題" });
       sessionStorage.removeItem("player_info");
       console.error(error);
       return false;
@@ -194,6 +197,7 @@ export const UserContextProvider = ({ children }) => {
    * 註冊函式，用於處理註冊請求，並將註冊資訊發送到伺服器進行驗證。
    * @param {Object} e
    * @returns {Promise<void>}
+   * @type {Function} registerUser
    */
   const registerUser = useCallback(
     async (e) => {
@@ -241,6 +245,31 @@ export const UserContextProvider = ({ children }) => {
     [registerInfo, navigate]
   );
 
+  /**
+   * 更新使用者資料
+   * @param {Object} info 使用者資料
+   * @returns {Promise<void>}
+   * @type {Function} updateProfile
+   */
+  const updateProfile = useCallback(async (info) => {
+    try {
+      const res = await fetch(`${server_url}/user/update`, {
+        method: "post",
+        headers: { "Content-Type": "Application/json" },
+        body: JSON.stringify(info),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        sessionStorage.setItem("player_info", JSON.stringify(data));
+        setUser(data);
+      } else {
+        console.error(data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
   return (
     <UserContext.Provider
       value={{
@@ -256,6 +285,7 @@ export const UserContextProvider = ({ children }) => {
         socket,
         loginUser,
         isLoadingState,
+        updateProfile,
       }}
     >
       {children}

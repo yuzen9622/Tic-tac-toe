@@ -91,7 +91,7 @@ export default function HistoryComponet({ historyItem }) {
                 parseInt(historyItem?.winner[0]) === user?.id
                   ? { color: "#99cfff  " }
                   : { color: "#e3242b" }),
-                ...(historyItem?.winner[1] === "draw" && { color: "#333" }),
+                ...(historyItem?.winner[1] === "draw" && { color: "white" }),
               }}
             >
               {historyItem?.winner[1] === "draw" && "平手"}

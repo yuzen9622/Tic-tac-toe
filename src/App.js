@@ -8,6 +8,7 @@ import "./App.css";
 import Register from "./register";
 import AIonline from "./AIonline";
 import Record from "./record";
+import Profile from "./profile";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/history" element={<HistoryPage />} />
         <Route path="/history/:index" element={<HistoryPage />} />
         <Route path="/auth/register" element={<Register />} />
+        <Route path="/auth/profile" element={<Profile />} />
         <Route path="/AI" element={<AIonline />} />
         <Route path="/record" element={<Record />} />
       </Routes>
