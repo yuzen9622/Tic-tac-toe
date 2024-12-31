@@ -4,7 +4,7 @@ import { server_url } from "./servirce";
 import { useNavigate } from "react-router-dom";
 /**
  * 歷史紀錄列組件
- * @returns {React.JSX.Element} 歷史紀錄列組件
+ * @returns {React.JSX.Element} HistoryTr
  */
 export default function HistoryTr({ historyItem, number, isactive }) {
   /**

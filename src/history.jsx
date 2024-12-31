@@ -10,7 +10,7 @@ import HistoryComponet from "./historyComponent";
 
 /**
  * 歷史紀錄頁面
- * @returns {React.JSX.Element} 歷史紀錄頁面內容
+ * @returns {React.JSX.Element} HistoryPage
  */
 export default function HistoryPage() {
   /**
