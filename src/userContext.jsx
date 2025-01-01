@@ -32,10 +32,12 @@ export const UserContextProvider = ({ children }) => {
   const [errorState, setErrorState] = useState({
     login: null,
     register: null,
+    update: null,
   });
   const [isLoadingState, setIsLoadingState] = useState({
     login: false,
     register: false,
+    update: false,
   });
   const [user, setUser] = useState(
     JSON.parse(sessionStorage.getItem("player_info"))
@@ -252,6 +254,7 @@ export const UserContextProvider = ({ children }) => {
    * @type {Function} updateProfile
    */
   const updateProfile = useCallback(async (info) => {
+    setIsLoadingState({ ...errorState, update: true });
     try {
       const res = await fetch(`${server_url}/user/update`, {
         method: "post",
@@ -263,10 +266,13 @@ export const UserContextProvider = ({ children }) => {
         sessionStorage.setItem("player_info", JSON.stringify(data));
         setUser(data);
       } else {
+        setErrorState({ ...errorState, update: data.message });
         console.error(data);
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoadingState({ ...errorState, update: false });
     }
   }, []);
 

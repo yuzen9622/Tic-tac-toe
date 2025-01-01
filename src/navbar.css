@@ -1,4 +1,4 @@
-.navbar{
+.navbar {
     width: 100%;
     display: flex;
     align-items: center;
@@ -6,20 +6,24 @@
     padding: 5px 0;
     height: 5%;
 }
-.navbar a,.navbar p{
+
+.navbar a {
 
     padding: 5px;
     font-size: 20px;
     text-decoration: none;
     color: white;
 }
-.navbar p{
+
+.navbar .user {
     text-transform: uppercase;
     color: white;
     font-weight: 600;
     text-decoration: underline dotted;
-    overflow:hidden;
-white-space: nowrap;
-text-overflow: hidden;
+    overflow: hidden;
+    width: 10%;
+    max-width: max-content;
+    white-space: nowrap;
+    text-overflow: hidden;
 
 }

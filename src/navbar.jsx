@@ -26,9 +26,11 @@ export default function Navbar() {
       {user ? (
         <>
           <NavLink to={"/history"}>歷史</NavLink>
-          <p>
-            <NavLink to={"auth/profile"}>{user?.name}</NavLink>
-          </p>
+
+          <NavLink className="user" to={"auth/profile"}>
+            {user?.name}
+          </NavLink>
+
           <NavLink onClick={logout}>登出</NavLink>
         </>
       ) : (

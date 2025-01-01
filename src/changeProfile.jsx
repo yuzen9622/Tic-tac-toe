@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./main.css";
 import { UserContext } from "./userContext";
 
@@ -8,7 +8,8 @@ import { UserContext } from "./userContext";
  * @returns {React.JSX.Element} ChangeProfile
  */
 export default function ChangeProfile({ setIsOpen }) {
-  const { user, updateProfile } = useContext(UserContext);
+  const { user, updateProfile, isLoadingState, errorState } =
+    useContext(UserContext);
   const [changeProfile, setChangeProfile] = useState({
     id: user?.id,
     name: user.name,
@@ -20,7 +21,6 @@ export default function ChangeProfile({ setIsOpen }) {
     <form
       onSubmit={(e) => {
         updateProfile(changeProfile);
-        setIsOpen(false);
       }}
       className="register"
     >
@@ -49,9 +49,10 @@ export default function ChangeProfile({ setIsOpen }) {
           setChangeProfile({ ...changeProfile, password: e.target.value })
         }
         value={changeProfile.password}
+        autoComplete="off"
         placeholder="new password"
       />
-
+      {errorState?.update && <p className="error">{errorState.update}</p>}
       <div className="btn">
         <button type="button" onClick={() => setIsOpen(false)}>
           取消
