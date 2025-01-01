@@ -179,8 +179,8 @@ export const UserContextProvider = ({ children }) => {
         setSocket(newSocket);
         setIsLoadingState({ ...isLoadingState, login: data.message });
         return true;
-      } else {
-        setErrorState({ ...errorState, login: "登入失敗" });
+      } else if (res.status === 500) {
+        setErrorState({ ...errorState, login: data.message });
         sessionStorage.removeItem("player_info");
         setIsLoadingState({ ...isLoadingState, login: false });
         return false;
