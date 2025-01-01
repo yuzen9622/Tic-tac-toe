@@ -21,6 +21,7 @@ export default function ChangeProfile({ setIsOpen }) {
     <form
       onSubmit={(e) => {
         updateProfile(changeProfile);
+        setIsOpen(false);
       }}
       className="register"
     >
