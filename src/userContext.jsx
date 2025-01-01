@@ -251,10 +251,11 @@ export const UserContextProvider = ({ children }) => {
    * 更新使用者資料
    * @param {Object} info 使用者資料
    * @returns {Promise<void>}
-   * @type {Function} updateProfile
+   * @type {Promise<void>} updateProfile
    */
   const updateProfile = useCallback(async (info) => {
     setIsLoadingState({ ...errorState, update: true });
+    setErrorState({ ...errorState, update: null });
     try {
       const res = await fetch(`${server_url}/user/update`, {
         method: "post",
@@ -262,7 +263,7 @@ export const UserContextProvider = ({ children }) => {
         body: JSON.stringify(info),
       });
       const data = await res.json();
-      if (res.ok) {
+      if (res.ok && res.status === 200) {
         sessionStorage.setItem("player_info", JSON.stringify(data));
         setUser(data);
       } else {

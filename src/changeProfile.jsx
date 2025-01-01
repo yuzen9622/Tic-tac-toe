@@ -8,8 +8,7 @@ import { UserContext } from "./userContext";
  * @returns {React.JSX.Element} ChangeProfile
  */
 export default function ChangeProfile({ setIsOpen }) {
-  const { user, updateProfile, isLoadingState, errorState } =
-    useContext(UserContext);
+  const { user, updateProfile, errorState } = useContext(UserContext);
   const [changeProfile, setChangeProfile] = useState({
     id: user?.id,
     name: user.name,
@@ -19,10 +18,11 @@ export default function ChangeProfile({ setIsOpen }) {
 
   return (
     <form
-      onSubmit={(e) => {
-        updateProfile(changeProfile);
+      onSubmit={async (e) => {
+        await updateProfile(changeProfile);
         setIsOpen(false);
       }}
+      autoComplete="off"
       className="register"
     >
       <h3 style={{ fontSize: "25px", color: "white" }}>更改個人資料</h3>
@@ -49,8 +49,9 @@ export default function ChangeProfile({ setIsOpen }) {
         onChange={(e) =>
           setChangeProfile({ ...changeProfile, password: e.target.value })
         }
+        name="password"
+        autoComplete="new-password"
         value={changeProfile.password}
-        autoComplete="off"
         placeholder="new password"
       />
       {errorState?.update && <p className="error">{errorState.update}</p>}

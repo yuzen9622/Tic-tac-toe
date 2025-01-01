@@ -9,7 +9,7 @@ import ChangeProfile from "./changeProfile";
  * @returns {React.JSX.Element} Profile
  */
 export default function Profile() {
-  const { user } = useContext(UserContext);
+  const { user, errorState } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
@@ -18,6 +18,11 @@ export default function Profile() {
      */
     if (!user?.id) navigate("/");
   }, [0]);
+  useEffect(() => {
+    if (errorState.update) {
+      setIsOpen(true);
+    }
+  }, [errorState]);
   function formatDateTime(utcTime) {
     const date = new Date(utcTime);
     date.setHours(date.getHours() + 8);
