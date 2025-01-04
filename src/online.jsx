@@ -376,15 +376,16 @@ export default function Online() {
             <div className="point">
               <div
                 className={`player ${
-                  PlayAs === currentPlayer ? "currentState" : ""
+                  PlayAs === currentPlayer && !finish ? "currentState" : ""
                 }`}
               >
                 <label htmlFor="">{player.name}</label>
               </div>
               <div
                 className={`player ${
-                  PlayAs !== currentPlayer ? "currentState" : ""
+                  PlayAs !== currentPlayer && !finish ? "currentState" : ""
                 }`}
+                style={{ backgroundColor: "rgb(227, 36, 43, 0.8)" }}
               >
                 <label htmlFor="">{recipientPlayer.name}</label>
               </div>

@@ -1,300 +1,358 @@
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
   box-sizing: border-box;
-    background-color: rgb(19, 56, 190, 0.8);
+  background-color: rgb(19, 56, 190, 0.8);
 }
 
 .game {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    transition: all 0.5s;
-    gap: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  transition: all 0.5s;
+  gap: 5px;
 
 }
-.single,.online{
-height: 95%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
+.single,
+.online {
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 
 .game button {
-    width: 60px;
-    height: 60px;
-    text-align: center;
-    font-size: 50px;
-    background-color: transparent;
-    display: flex;
-    flex-direction: column;
-    border: 3px solid #333;
-    align-items: center;
-    gap: 5px;
-    justify-content: center;
-    border-radius: 5px;
-    color: #fff;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  font-size: 50px;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  border: 3px solid #333;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
+  border-radius: 5px;
+  color: #fff;
 }
 
 .start input {
-    margin-top: 20px;
-    border: none;
-    width: 80px;
-    height: 30px;
-    font-size: 25px;
-    background-color: transparent;
-    border: 2px solid #333;
-    border-radius: 15px;
+  margin-top: 20px;
+  border: none;
+  width: 80px;
+  height: 30px;
+  font-size: 25px;
+  background-color: transparent;
+  border: 2px solid #333;
+  border-radius: 15px;
 
 }
 
 .start input:hover {
-    background-color: #333;
-    color: #fff;
+  background-color: #333;
+  color: #fff;
 }
 
 h1 {
-    font-size: 60px;
-    
+  font-size: 60px;
+
 }
 
 h2 {
-    color: #fff;
-    font-size: 30px;
+  color: #fff;
+  font-size: 30px;
 }
 
 .name {
-    text-align: center;
+  text-align: center;
 }
 
 .point {
-    display: flex;
-    color: #fff;
-    margin-bottom: 20px;
+  display: flex;
+  color: #fff;
+  margin-bottom: 20px;
 
 }
 
 .point input {
-    width: 50px;
-    border: none;
-    outline: none;
-    text-align: center;
-    background-color: transparent;
-    font-size: 25px;
-    color: #fff;
-    border-bottom: 1px solid #fff;
+  width: 50px;
+  border: none;
+  outline: none;
+  text-align: center;
+  background-color: transparent;
+  font-size: 25px;
+  color: #fff;
+  border-bottom: 1px solid #fff;
 }
 
 .point label {
-    font-size: 25px;
+  font-size: 25px;
 
 }
 
 .ox {
-    margin-left: 20px;
+  margin-left: 20px;
 }
-.player{
-  
-    background-color: #0096FF;
-    padding: 5px;
-    border-radius: 0px 50px;
-    margin: 0 10px;
-    min-width: 150px;
-    text-overflow: ellipsis;
-    white-space:inherit;
 
- }
- .player label{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px 0;
- }
- .currentState{
-    background-color:rgb(227, 36, 43,0.8) ;
- }
- .winInputO{
-    background-color: #0087e8 !important;
-    color: #ffffff !important;
-    border:3px solid #fff !important;
- }
- .winInputX{
-    background-color: rgb(227, 36, 43,0.8) !important;
-    color: #ffffff !important;
-    border:3px solid #fff !important;
- }
-.disconnect-popbox{
-    z-index: 100;
-    position: absolute;
-    background-color: #e97451;
-    display: block;
-    opacity: 0;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    border-radius: 5px;
-    color: white;
-    bottom: 20%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    transition: all .3s;
-  
- }
+.player {
+  background-color: #0096ff;
+  padding: 5px;
+  border-radius: 0px 50px;
+  margin: 0 10px;
+  min-width: 150px;
+  text-overflow: ellipsis;
+  white-space: inherit;
+  border: 3px solid transparent;
 
- .popbox{
-    z-index: 100;
-    position: absolute;
-    background-color: #333333b9;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-  
- }
-.popbox form{
+}
+
+.player label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 0;
+}
+
+.currentState {
+
+  border: 3px solid #fff;
+  animation: bilnk .8s ease-out infinite;
+}
+
+@keyframes bilnk {
+  0% {
+    border: 3px solid #fff;
+  }
+
+  50% {
+    border: 3px solid transparent;
+  }
+
+  100% {
+    border: 3px solid #fff;
+  }
+
+}
+
+.winInputO {
+  background-color: #0087e8 !important;
+  color: #ffffff !important;
+  border: 3px solid #fff !important;
+}
+
+.winInputX {
+  background-color: rgb(227, 36, 43, 0.8) !important;
+  color: #ffffff !important;
+  border: 3px solid #fff !important;
+}
+
+.disconnect-popbox {
+  z-index: 100;
+  position: absolute;
+  background-color: #e97451;
+  display: block;
+  opacity: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  bottom: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all .3s;
+
+}
+
+.popbox {
+  z-index: 100;
+  position: absolute;
+  background-color: #333333b9;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+
+}
+
+.popbox form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
- .popbox input,.popbox button,.register input ,.register button{
-    background: #0096ff;
-    border: 2px solid transparent;
-    border-radius: 5px;
-      color: #1338becc;
-      font-weight: 600;
-      margin: 10px;
-      padding: 10px 10px;
-    font-size: 18px;
-    transition: all .3s;
-     
- }
- .popbox input::placeholder, .register input::placeholder{
-       color: white; 
- }
- .popbox input:focus,.register input:focus {
-    outline: none;
-    border: 2px solid white;
-    color: white; 
- }
 
+.popbox input,
+.popbox button,
+.register input,
+.register button {
+  background: #0096ff;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  color: #1338becc;
+  font-weight: 600;
+  margin: 10px;
+  padding: 10px 10px;
+  font-size: 18px;
+  transition: all .3s;
 
+}
 
- .popbox button:hover,.register button:hover{
+.popbox input::placeholder,
+.register input::placeholder {
+  color: white;
+}
+
+.popbox input:focus,
+.register input:focus {
+  outline: none;
   border: 2px solid white;
   color: white;
- }
-.register{
+}
+
+
+
+.popbox button:hover,
+.register button:hover {
+  border: 2px solid white;
+  color: white;
+}
+
+.register {
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.comment ,.comment a{
+
+.comment,
+.comment a {
   color: white;
 }
-.error{
+
+.error {
 
   color: #e97451;
   font-weight: 600;
 }
 
- .players{
-    background: #0096ff;
-    padding: 5px;
-    margin: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 5px;
- }
- .players button{
-    align-items: center;
-    background: #0096ff;
+.players {
+  background: #0096ff;
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   border-radius: 5px;
-    color: #1338becc;
-    display: flex;
+}
 
-    font-weight: 700;
-    justify-content: center;
-    margin: 10px;
-    padding: 10px 10px;
-    text-decoration: none;
-    transition: all .5s;
-   
- }
- .players p{
-    color: white;
- }
- .allPlayers{
-    display: flex;
- }
- /* HTML: <div class="loader"></div> */
+.players button {
+  align-items: center;
+  background: #0096ff;
+  border-radius: 5px;
+  color: #1338becc;
+  display: flex;
+
+  font-weight: 700;
+  justify-content: center;
+  margin: 10px;
+  padding: 10px 10px;
+  text-decoration: none;
+  transition: all .5s;
+
+}
+
+.players p {
+  color: white;
+}
+
+.allPlayers {
+  display: flex;
+}
+
+/* HTML: <div class="loader"></div> */
 .loader {
-    font-weight: bold;
-    font-family: sans-serif;
-    font-size: 30px;
-    animation: l1 1s linear infinite alternate;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 30px;
+  animation: l1 1s linear infinite alternate;
+}
+
+.loader:before {
+  content: "Connect to server..."
+}
+
+@keyframes l1 {
+  to {
+    opacity: 0
   }
-  .loader:before {
-    content:"Connect to server..."
-  }
- 
-  @keyframes l1 {to{opacity: 0}}
-  /* HTML: <div class="loader"></div> */
+}
+
+/* HTML: <div class="loader"></div> */
 
 
- 
 
-  /* HTML: <div class="loader"></div> */
+
+/* HTML: <div class="loader"></div> */
 .no-Player {
-  --c:#000;
+  --c: #000;
   width: fit-content;
   font-weight: bold;
   font-family: monospace;
   font-size: 30px;
   color: #0000;
   overflow: hidden;
-  text-shadow: 0 0 var(--c),20ch 0 var(--c);
-  animation: l6 2s infinite linear; 
+  text-shadow: 0 0 var(--c), 20ch 0 var(--c);
+  animation: l6 2s infinite linear;
 }
-.no-Player:before {
-  content:"No Player Yet..."
-}
-@keyframes l6 {to{text-shadow:-20ch 0 var(--c),0ch 0 var(--c)}}
-  @keyframes l24{
-    100%{background-position: left}
-  }
 
-  .share-btn{
-width: 150px;
-  padding: 5px 10px;
-    background-color: #0096ff;
-    border: none;
-    font-weight: 500;
-    font-size: 18px;
-    border-radius: 30px;
-   font-family: monospace;
-    text-align: center;
-    margin-top: 10px;
-    line-height: 40px;
-    cursor: pointer;
-    border: 3px solid transparent;
-    letter-spacing: 2px;
-    color: #EEEEED;
-    transition: all .5s ;
+.no-Player:before {
+  content: "No Player Yet..."
+}
+
+@keyframes l6 {
+  to {
+    text-shadow: -20ch 0 var(--c), 0ch 0 var(--c)
   }
+}
+
+@keyframes l24 {
+  100% {
+    background-position: left
+  }
+}
+
+.share-btn {
+  width: 150px;
+  padding: 5px 10px;
+  background-color: #0096ff;
+  border: none;
+  font-weight: 500;
+  font-size: 18px;
+  border-radius: 30px;
+  font-family: monospace;
+  text-align: center;
+  margin-top: 10px;
+  line-height: 40px;
+  cursor: pointer;
+  border: 3px solid transparent;
+  letter-spacing: 2px;
+  color: #EEEEED;
+  transition: all .5s;
+}

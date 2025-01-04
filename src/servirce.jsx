@@ -1,5 +1,6 @@
 /**
  * @fileoverview 本地伺服器地址和雲端伺服器地址管理
+ * @module service 伺服器地址管理
  * @module service checkUser查看用戶權限
  */
 
