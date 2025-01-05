@@ -19,10 +19,10 @@ export default function ChangeProfile({ setIsOpen }) {
   return (
     <form
       onSubmit={async (e) => {
+        e.preventDefault();
         await updateProfile(changeProfile);
         setIsOpen(false);
       }}
-      autoComplete="off"
       className="register"
     >
       <h3 style={{ fontSize: "25px", color: "white" }}>更改個人資料</h3>
@@ -49,8 +49,6 @@ export default function ChangeProfile({ setIsOpen }) {
         onChange={(e) =>
           setChangeProfile({ ...changeProfile, password: e.target.value })
         }
-        name="password"
-        autoComplete="new-password"
         value={changeProfile.password}
         placeholder="new password"
       />
