@@ -40,7 +40,7 @@ const AIonline = () => {
         });
         const data = await res.json();
         if (data && res.ok) {
-          if (data?.position && chessBoard[data?.position] === "") {
+          if (data.position!==null && chessBoard[data?.position] === "") {
             setChessBoard((prev) => {
               let newPrev = [...prev];
               newPrev[data.position] = "X";
